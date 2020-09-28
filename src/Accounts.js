@@ -1,44 +1,56 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import './Accounts.css';
 
-class Accounts extends Component {
-  render() {
+function renderAccounts(accounts) {
+  return accounts.map((account) => {
     return (
-      <div class="accounts">
-        <Link className="btn btn-primary" to="/accounts/new">
-          Add Account
-        </Link>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Address</th>
-              <th scope="col">Industry</th>
-              <th scope="col">Revenue</th>
-              <th scope="col">Rating</th>
-              <th scope="col">Est. Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Taco Bell</td>
-              <td>1 Geln Bell Way Irvine, CA 92618</td>
-              <td>Food & Beverage</td>
-              <td>$1.339B</td>
-              <td>Hot</td>
-              <td>03/08/20</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <tr key={account.id}>
+        <td>{account.name}</td>
+        <td>{account.address}</td>
+        <td>{account.industry}</td>
+        <td>{account.annualRevenue}</td>
+        <td>{account.rating}</td>
+        <td>{account.establishedDate.toString()}</td>
+      </tr>
     );
-  }
+  });
 }
 
-Accounts.propTypes = {};
+export function Accounts(props) {
+  return (
+    <div className="accounts">
+      <Link className="btn btn-primary" to="/accounts/new">
+        Add Account
+      </Link>
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Industry</th>
+            <th scope="col">Revenue</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Est. Date</th>
+          </tr>
+        </thead>
+        <tbody>{renderAccounts(props.accounts)}</tbody>
+      </table>
+    </div>
+  );
+}
 
-export default Accounts;
+Accounts.propTypes = {
+  accounts: PropTypes.array.isRequired
+};
+
+function mapStateToProps(state, ownProps) {
+  return {
+    accounts: state
+  };
+}
+
+export default connect(mapStateToProps)(Accounts);
