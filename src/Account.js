@@ -1,12 +1,29 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-class Account extends Component {
+import AccountDetails from './AccountDetails';
+
+export class Account extends Component {
   render() {
-    return <div>Account Detail</div>;
+    return (
+      <div>
+        <AccountDetails account={this.props.account} />
+      </div>
+    );
   }
 }
 
-Account.propTypes = {};
+Account.propTypes = {
+  account: PropTypes.object.isRequired
+};
 
-export default Account;
+const mapDispatchToProps = {
+  createAccount: undefined,
+  updateAccount: undefined
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Account);
