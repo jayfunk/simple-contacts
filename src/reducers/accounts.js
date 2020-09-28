@@ -6,5 +6,5 @@ export default function Accounts(state = getInitialState(), action = {}) {
 }
 
 function getInitialState() {
-  return {};
+  return [];
 }
