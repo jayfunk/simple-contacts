@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
 
+import {RAITING_OPTIONS, INDUSTRY_OPTIONS} from './constants';
+
 import './Accounts.css';
 
 function renderAccounts(history, accounts) {
@@ -15,9 +17,9 @@ function renderAccounts(history, accounts) {
       >
         <td>{account.name}</td>
         <td>{account.address}</td>
-        <td>{account.industry}</td>
+        <td>{INDUSTRY_OPTIONS[account.industry]}</td>
         <td>{account.annualRevenue}</td>
-        <td>{account.rating}</td>
+        <td>{RAITING_OPTIONS[account.rating]}</td>
         <td>{account.establishedDate.toString()}</td>
       </tr>
     );
@@ -31,7 +33,7 @@ export function Accounts(props) {
         Add Account
       </Link>
       <table className="table">
-        <thead>
+        <thead className="thead-dark">
           <tr>
             <th scope="col">Name</th>
             <th scope="col">Address</th>

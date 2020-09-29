@@ -1,3 +1,6 @@
 .accounts {
-  background-color: grey;
+}
+
+.accounts tbody > tr {
+  cursor: pointer;
 }
