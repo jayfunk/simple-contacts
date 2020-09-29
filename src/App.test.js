@@ -67,3 +67,28 @@ it('should find and render the account when navigating to the account route', ()
 
   expect(wrapper.find(Account)).toHaveProp('account', accounts[0]);
 });
+
+it('should render the account component with a null account if the account id is new', () => {
+  const accounts = [
+    {
+      id: 'account-1',
+      name: 'New Account',
+      address: '102 my street austin, texas',
+      industry: 'Agriculture',
+      annualRevenue: '$1.2B',
+      rating: 'hot',
+      establishedDate: new Date(),
+      contacts: []
+    }
+  ];
+
+  const wrapper = mount(
+    <MemoryRouter initialEntries={['/accounts/new']}>
+      <Provider store={mockStore(accounts)}>
+        <App />
+      </Provider>
+    </MemoryRouter>
+  );
+
+  expect(wrapper.find(Account)).toHaveProp('account', null);
+});

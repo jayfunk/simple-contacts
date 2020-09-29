@@ -10,15 +10,17 @@ function Account({account}) {
       <div className="row">
         <AccountDetails account={account} />
       </div>
-      <div className="row">
-        <Contacts accountId={account.id} contacts={account.contacts} />
-      </div>
+      {account !== null && (
+        <div className="row">
+          <Contacts accountId={account.id} contacts={account.contacts} />
+        </div>
+      )}
     </div>
   );
 }
 
 Account.propTypes = {
-  account: PropTypes.object.isRequired
+  account: PropTypes.object
 };
 
 export default Account;

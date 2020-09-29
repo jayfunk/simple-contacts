@@ -21,3 +21,10 @@ it('should render contacts', () => {
   expect(wrapper.find(Contacts)).toHaveProp('contacts', account.contacts);
   expect(wrapper.find(Contacts)).toHaveProp('accountId', account.id);
 });
+
+it('should not render contacts if the account is null', () => {
+  const account = null;
+  const wrapper = shallow(<Account account={account} />);
+
+  expect(wrapper.find(Contacts)).not.toExist();
+});

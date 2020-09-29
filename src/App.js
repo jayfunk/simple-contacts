@@ -10,7 +10,7 @@ import './App.css';
 
 function App(props) {
   return (
-    <div className="App">
+    <div className="App container">
       <Switch>
         <Route exact path="/">
           <Accounts accounts={props.accounts} />
@@ -19,11 +19,17 @@ function App(props) {
           path="/accounts/:accountId"
           render={({match}) => {
             const accountId = match.params.accountId;
+
+            if (accountId === 'new') {
+              return <Account account={null} />;
+            }
+
             const account = props.accounts.find((account) => account.id === accountId);
 
-            if (!account && accountId !== 'new') {
+            if (!account) {
               return <Redirect to="/" />;
             }
+
             return <Account account={account} />;
           }}
         />
