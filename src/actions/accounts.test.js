@@ -20,3 +20,11 @@ test('createAccount creates an account payload with a generated id', () => {
     establishedDate: expect.any(Date)
   });
 });
+
+test('updateAccount generates an update account action', () => {});
+
+test('addContact generates an add contact action', () => {});
+
+test('removeContact generates a remove contact action', () => {});
+
+test('removeAccount generates a remove account action', () => {});
