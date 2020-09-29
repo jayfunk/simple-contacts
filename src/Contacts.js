@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 
 import {LEAD_SOURCE_OPTIONS} from './constants';
 
@@ -24,17 +24,22 @@ function renderContacts(history, contacts) {
 
 export function Contacts(props) {
   return (
-    <table className="col table">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Phone</th>
-          <th scope="col">Email</th>
-          <th scope="col">Lead Source</th>
-        </tr>
-      </thead>
-      <tbody>{renderContacts(props.history, props.contacts)}</tbody>
-    </table>
+    <div className="col contacts">
+      <Link className="btn btn-primary" to="/contacts/new">
+        Add Contact
+      </Link>
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Lead Source</th>
+          </tr>
+        </thead>
+        <tbody>{renderContacts(props.history, props.contacts)}</tbody>
+      </table>
+    </div>
   );
 }
 
