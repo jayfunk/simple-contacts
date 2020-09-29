@@ -16,6 +16,4 @@ it('should open contact modal when add contact button is pressed', () => {});
 
 it('should open contact modal with contact details when a contact is selected in the table', () => {});
 
-it('should delete a contact', () => {});
-
 it('should not update the account when cancel is pressed while in edit mode', () => {});
