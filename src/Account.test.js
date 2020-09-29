@@ -3,17 +3,21 @@ import {shallow} from 'enzyme';
 
 import Account from './Account';
 import AccountDetails from './AccountDetails';
+import Contacts from './Contacts';
 
 it('should render account details', () => {
-  const account = {some: 'detail'};
+  const account = {id: 'account-1'};
   const wrapper = shallow(<Account account={account} />);
 
   expect(wrapper.find(AccountDetails)).toExist();
   expect(wrapper.find(AccountDetails)).toHaveProp('account', account);
 });
 
-it('should open contact modal when add contact button is pressed', () => {});
+it('should render contacts', () => {
+  const account = {id: 'account-1', contacts: [{id: 'contact-1'}]};
+  const wrapper = shallow(<Account account={account} />);
 
-it('should open contact modal with contact details when a contact is selected in the table', () => {});
-
-it('should not update the account when cancel is pressed while in edit mode', () => {});
+  expect(wrapper.find(Contacts)).toExist();
+  expect(wrapper.find(Contacts)).toHaveProp('contacts', account.contacts);
+  expect(wrapper.find(Contacts)).toHaveProp('accountId', account.id);
+});

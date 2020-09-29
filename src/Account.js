@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import AccountDetails from './AccountDetails';
 import Contacts from './Contacts';
 
-function Account(props) {
+function Account({account}) {
   return (
     <div className="container">
       <div className="row">
-        <AccountDetails account={props.account} />
+        <AccountDetails account={account} />
       </div>
       <div className="row">
-        <Contacts contacts={props.account.contacts} />
+        <Contacts accountId={account.id} contacts={account.contacts} />
       </div>
     </div>
   );
