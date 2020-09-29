@@ -4,7 +4,7 @@ import {
   removeAccount,
   addContactToAccount,
   updateContact,
-  removeContactFromAccount
+  removeContact
 } from '../actions/accounts';
 
 export default function Accounts(state = getInitialState(), action = {}) {
@@ -82,7 +82,7 @@ export default function Accounts(state = getInitialState(), action = {}) {
       return updatedState;
     }
 
-    case removeContactFromAccount.type: {
+    case removeContact.type: {
       const accountIndex = state.findIndex((account) => account.id === action.payload.accountId);
       const account = state[accountIndex];
 

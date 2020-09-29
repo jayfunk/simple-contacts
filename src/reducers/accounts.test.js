@@ -6,7 +6,7 @@ import {
   removeAccount,
   addContactToAccount,
   updateContact,
-  removeContactFromAccount
+  removeContact
 } from '../actions/accounts';
 
 it('should set its default state to an empty array', () => {
@@ -324,7 +324,7 @@ it('should remove a contact from an account', () => {
   state = reducer(state, addContact1Action);
   state = reducer(state, addContact2Action);
 
-  const removeContactAction = removeContactFromAccount(accountId, contactId);
+  const removeContactAction = removeContact(accountId, contactId);
 
   const actual = reducer(state, removeContactAction);
   expect(actual).toEqual([

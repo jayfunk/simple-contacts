@@ -3,7 +3,7 @@ import {
   updateAccount,
   removeAccount,
   addContactToAccount,
-  removeContactFromAccount,
+  removeContact,
   updateContact
 } from './accounts';
 import * as constants from '../constants';
@@ -95,9 +95,9 @@ test('updateContact generates an update contact action', () => {
   });
 });
 
-test('removeContactFromAccount generates a remove contact action', () => {
-  expect(removeContactFromAccount(1234, 5678)).toEqual({
-    type: removeContactFromAccount.type,
+test('removeContact generates a remove contact action', () => {
+  expect(removeContact(1234, 5678)).toEqual({
+    type: removeContact.type,
     payload: {
       accountId: 1234,
       contactId: 5678
