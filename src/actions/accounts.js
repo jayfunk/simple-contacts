@@ -22,7 +22,7 @@ export const updateAccount = createAction('accounts/update', (accountId, account
 
 export const removeAccount = createAction('accounts/remove');
 
-export const addContactToAccount = createAction('accounts/addContact', (accountId, contact) => {
+export const addContact = createAction('accounts/addContact', (accountId, contact) => {
   return {
     payload: {
       accountId,
@@ -49,14 +49,11 @@ export const updateContact = createAction(
   }
 );
 
-export const removeContactFromAccount = createAction(
-  'accounts/removeContact',
-  (accountId, contactId) => {
-    return {
-      payload: {
-        accountId,
-        contactId
-      }
-    };
-  }
-);
+export const removeContact = createAction('accounts/removeContact', (accountId, contactId) => {
+  return {
+    payload: {
+      accountId,
+      contactId
+    }
+  };
+});

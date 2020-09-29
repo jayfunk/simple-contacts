@@ -2,7 +2,7 @@ import {
   createAccount,
   updateAccount,
   removeAccount,
-  addContactToAccount,
+  addContact,
   updateContact,
   removeContact
 } from '../actions/accounts';
@@ -42,7 +42,7 @@ export default function Accounts(state = getInitialState(), action = {}) {
       return updatedState;
     }
 
-    case addContactToAccount.type: {
+    case addContact.type: {
       const accountIndex = state.findIndex((account) => account.id === action.payload.accountId);
       const account = state[accountIndex];
 

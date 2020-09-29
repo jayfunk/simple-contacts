@@ -2,7 +2,7 @@ import {
   createAccount,
   updateAccount,
   removeAccount,
-  addContactToAccount,
+  addContact,
   removeContact,
   updateContact
 } from './accounts';
@@ -55,16 +55,16 @@ test('removeAccount generates a remove account action', () => {
   });
 });
 
-test('addContactToAccount generates an add contact action', () => {
+test('addContact generates an add contact action', () => {
   expect(
-    addContactToAccount(1234, {
+    addContact(1234, {
       name: 'Contact 1',
       phone: '4041124444',
       email: 'contact1@contacts.com',
       leadSource: constants.LEAD_SOURCE_WEB
     })
   ).toEqual({
-    type: addContactToAccount.type,
+    type: addContact.type,
     payload: {
       accountId: 1234,
       contact: {

@@ -4,7 +4,7 @@ import {
   createAccount,
   updateAccount,
   removeAccount,
-  addContactToAccount,
+  addContact,
   updateContact,
   removeContact
 } from '../actions/accounts';
@@ -184,7 +184,7 @@ it('should add a contact to an account', () => {
   const accountId = account1Action.payload.id;
   const state = reducer(reducer(), account1Action);
 
-  const addContactAction = addContactToAccount(accountId, {
+  const addContactAction = addContact(accountId, {
     name: 'Contact 1',
     phone: '5555555555',
     email: 'contact1@contacts.com',
@@ -218,7 +218,7 @@ it('should update an accounts contact', () => {
   });
   const accountId = account1Action.payload.id;
 
-  const addContactAction = addContactToAccount(accountId, {
+  const addContactAction = addContact(accountId, {
     name: 'Contact 1',
     phone: '5555555555',
     email: 'contact1@contacts.com',
@@ -261,7 +261,7 @@ it('should update an accounts contact and ignore an id field in the update', () 
   });
   const accountId = account1Action.payload.id;
 
-  const addContactAction = addContactToAccount(accountId, {
+  const addContactAction = addContact(accountId, {
     name: 'Contact 1',
     phone: '5555555555',
     email: 'contact1@contacts.com',
@@ -305,13 +305,13 @@ it('should remove a contact from an account', () => {
   });
   const accountId = account1Action.payload.id;
 
-  const addContact1Action = addContactToAccount(accountId, {
+  const addContact1Action = addContact(accountId, {
     name: 'Contact 1',
     phone: '5555555555',
     email: 'contact1@contacts.com',
     leadSource: constants.LEAD_SOURCE_PURCHASEDLIST
   });
-  const addContact2Action = addContactToAccount(accountId, {
+  const addContact2Action = addContact(accountId, {
     name: 'Contact 2',
     phone: '3333333333',
     email: 'contact2@contacts.com',
