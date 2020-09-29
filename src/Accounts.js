@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
 
 import './Accounts.css';
 
@@ -53,10 +52,4 @@ Accounts.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-  return {
-    accounts: state
-  };
-}
-
-export default withRouter(connect(mapStateToProps)(Accounts));
+export default withRouter(Accounts);

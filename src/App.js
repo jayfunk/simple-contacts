@@ -1,5 +1,6 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import Accounts from './Accounts';
 import Account from './Account';
@@ -7,20 +8,20 @@ import Account from './Account';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-function App() {
+function App(props) {
   return (
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <Accounts />
+          <Accounts accounts={props.accounts} />
         </Route>
         <Route
-          path="/accounts/:accountName"
+          path="/accounts/:accountId"
           render={({match}) => {
-            const accountName = match.params.accountName;
-            // this.props.accounts.find()
-            const account = null;
-            if (!account && accountName !== 'new') {
+            const accountId = match.params.accountId;
+            const account = this.props.accounts.find((account) => account.id === accountId);
+
+            if (!account && accountId !== 'new') {
               return <Redirect to="/" />;
             }
             return <Account account={account} />;
@@ -31,4 +32,10 @@ function App() {
   );
 }
 
-export default App;
+function mapStateToProps(state, ownProps) {
+  return {
+    accounts: state
+  };
+}
+
+export default connect(mapStateToProps)(App);

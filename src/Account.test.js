@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 
-import {Account} from './Account';
+import Account from './Account';
 import AccountDetails from './AccountDetails';
 
 it('should render account details', () => {
