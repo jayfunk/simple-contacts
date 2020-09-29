@@ -2,7 +2,7 @@ import React from 'react';
 import {nanoid} from '@reduxjs/toolkit';
 import {shallow} from 'enzyme';
 
-import {RAITING_HOT, INDUSTRY_AGRICULTURE} from './constants';
+import {RATING_HOT, INDUSTRY_AGRICULTURE} from './constants';
 import {Accounts} from './Accounts';
 
 it('should render an account', () => {
@@ -12,7 +12,7 @@ it('should render an account', () => {
     address: '102 my street austin, texas',
     industry: INDUSTRY_AGRICULTURE,
     annualRevenue: '$1.2B',
-    rating: RAITING_HOT,
+    rating: RATING_HOT,
     establishedDate: new Date().toDateString()
   };
 
@@ -42,7 +42,7 @@ it('should navigate to an account detail page when an account row is clicked', (
           address: '102 my street austin, texas',
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: '$1.2B',
-          rating: RAITING_HOT,
+          rating: RATING_HOT,
           establishedDate: new Date().toDateString()
         }
       ]}

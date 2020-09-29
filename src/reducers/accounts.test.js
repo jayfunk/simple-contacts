@@ -43,7 +43,7 @@ it('should update an existing account', () => {
   const account2Action = createAccount({
     name: 'Account 2',
     address: '1 congress ave austin, tx',
-    raiting: constants.RAITING_HOT
+    raiting: constants.RATING_HOT
   });
   const accountId = account1Action.payload.id;
   let state = reducer(reducer(), account1Action);
@@ -53,7 +53,7 @@ it('should update an existing account', () => {
     reducer(
       state,
       updateAccount(accountId, {
-        rating: constants.RAITING_HOT,
+        rating: constants.RATING_HOT,
         name: 'Updated Account Name'
       })
     )
@@ -63,14 +63,14 @@ it('should update an existing account', () => {
       name: 'Updated Account Name',
       address: '1234 mini lane boston, ma',
       industry: constants.INDUSTRY_APPAREL,
-      rating: constants.RAITING_HOT,
+      rating: constants.RATING_HOT,
       contacts: []
     },
     {
       id: expect.anything(),
       name: 'Account 2',
       address: '1 congress ave austin, tx',
-      raiting: constants.RAITING_HOT,
+      raiting: constants.RATING_HOT,
       contacts: []
     }
   ]);
@@ -85,7 +85,7 @@ it('should update an account and ignore an id in the update payload ', () => {
   const account2Action = createAccount({
     name: 'Account 2',
     address: '1 congress ave austin, tx',
-    raiting: constants.RAITING_HOT
+    raiting: constants.RATING_HOT
   });
   const accountId = account1Action.payload.id;
   let state = reducer(reducer(), account1Action);
@@ -96,7 +96,7 @@ it('should update an account and ignore an id in the update payload ', () => {
       state,
       updateAccount(accountId, {
         id: 1234,
-        rating: constants.RAITING_HOT,
+        rating: constants.RATING_HOT,
         name: 'Updated Account Name'
       })
     )
@@ -106,14 +106,14 @@ it('should update an account and ignore an id in the update payload ', () => {
       name: 'Updated Account Name',
       address: '1234 mini lane boston, ma',
       industry: constants.INDUSTRY_APPAREL,
-      rating: constants.RAITING_HOT,
+      rating: constants.RATING_HOT,
       contacts: []
     },
     {
       id: expect.anything(),
       name: 'Account 2',
       address: '1 congress ave austin, tx',
-      raiting: constants.RAITING_HOT,
+      raiting: constants.RATING_HOT,
       contacts: []
     }
   ]);
@@ -132,7 +132,7 @@ it('should update an account and ignore a contacts field in the update payload '
     reducer(
       state,
       updateAccount(accountId, {
-        rating: constants.RAITING_HOT,
+        rating: constants.RATING_HOT,
         name: 'Updated Account Name',
         contacts: ['something']
       })
@@ -143,7 +143,7 @@ it('should update an account and ignore a contacts field in the update payload '
       name: 'Updated Account Name',
       address: '1234 mini lane boston, ma',
       industry: constants.INDUSTRY_APPAREL,
-      rating: constants.RAITING_HOT,
+      rating: constants.RATING_HOT,
       contacts: []
     }
   ]);
@@ -158,7 +158,7 @@ it('should delete an account', () => {
   const account2Action = createAccount({
     name: 'Account 2',
     address: '1 congress ave austin, tx',
-    raiting: constants.RAITING_HOT
+    raiting: constants.RATING_HOT
   });
   const accountId = account2Action.payload.id;
   let state = reducer(reducer(), account1Action);

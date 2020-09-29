@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
 
-import {RAITING_OPTIONS, INDUSTRY_OPTIONS} from './constants';
+import {RATING_OPTIONS, INDUSTRY_OPTIONS} from './constants';
 
 import './Accounts.css';
 
@@ -19,7 +19,7 @@ function renderAccounts(history, accounts) {
         <td>{account.address}</td>
         <td>{INDUSTRY_OPTIONS[account.industry]}</td>
         <td>{account.annualRevenue}</td>
-        <td>{RAITING_OPTIONS[account.rating]}</td>
+        <td>{RATING_OPTIONS[account.rating]}</td>
         <td>{account.establishedDate.toString()}</td>
       </tr>
     );

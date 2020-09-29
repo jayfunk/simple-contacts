@@ -56,14 +56,14 @@ export const INDUSTRY_OPTIONS = {
   [INDUSTRY_OTHER]: 'Other'
 };
 
-export const RAITING_HOT = 'hot';
-export const RAITING_WARM = 'warm';
-export const RAITING_COLD = 'cold';
+export const RATING_HOT = 'hot';
+export const RATING_WARM = 'warm';
+export const RATING_COLD = 'cold';
 
-export const RAITING_OPTIONS = {
-  [RAITING_HOT]: 'Hot',
-  [RAITING_WARM]: 'Warm',
-  [RAITING_COLD]: 'Cold'
+export const RATING_OPTIONS = {
+  [RATING_HOT]: 'Hot',
+  [RATING_WARM]: 'Warm',
+  [RATING_COLD]: 'Cold'
 };
 
 export const LEAD_SOURCE_WEB = 'web';
