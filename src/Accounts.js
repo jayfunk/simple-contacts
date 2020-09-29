@@ -1,14 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import './Accounts.css';
 
-function renderAccounts(accounts) {
+function renderAccounts(history, accounts) {
   return accounts.map((account) => {
     return (
-      <tr key={account.id}>
+      <tr
+        key={account.id}
+        onClick={() => {
+          history.push(`/accounts/${account.id}`);
+        }}
+      >
         <td>{account.name}</td>
         <td>{account.address}</td>
         <td>{account.industry}</td>
@@ -37,14 +42,15 @@ export function Accounts(props) {
             <th scope="col">Est. Date</th>
           </tr>
         </thead>
-        <tbody>{renderAccounts(props.accounts)}</tbody>
+        <tbody>{renderAccounts(props.history, props.accounts)}</tbody>
       </table>
     </div>
   );
 }
 
 Accounts.propTypes = {
-  accounts: PropTypes.array.isRequired
+  accounts: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
@@ -53,4 +59,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(Accounts);
+export default withRouter(connect(mapStateToProps)(Accounts));
