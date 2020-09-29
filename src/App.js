@@ -19,7 +19,7 @@ function App(props) {
           path="/accounts/:accountId"
           render={({match}) => {
             const accountId = match.params.accountId;
-            const account = this.props.accounts.find((account) => account.id === accountId);
+            const account = props.accounts.find((account) => account.id === accountId);
 
             if (!account && accountId !== 'new') {
               return <Redirect to="/" />;

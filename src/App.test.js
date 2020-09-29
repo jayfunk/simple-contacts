@@ -6,6 +6,7 @@ import {MemoryRouter} from 'react-router-dom';
 
 import App from './App';
 import Accounts from './Accounts';
+import Account from './Account';
 
 const mockStore = configureStore([]);
 
@@ -26,7 +27,8 @@ it('passes accounts to the Accounts component', () => {
       industry: 'Agriculture',
       annualRevenue: '$1.2B',
       rating: 'hot',
-      establishedDate: new Date()
+      establishedDate: new Date(),
+      contacts: []
     }
   ];
 
@@ -39,4 +41,29 @@ it('passes accounts to the Accounts component', () => {
   );
 
   expect(wrapper.find(Accounts)).toHaveProp('accounts', accounts);
+});
+
+it('should find and render the account when navigating to the account route', () => {
+  const accounts = [
+    {
+      id: 'account-1',
+      name: 'New Account',
+      address: '102 my street austin, texas',
+      industry: 'Agriculture',
+      annualRevenue: '$1.2B',
+      rating: 'hot',
+      establishedDate: new Date(),
+      contacts: []
+    }
+  ];
+
+  const wrapper = mount(
+    <MemoryRouter initialEntries={['/accounts/account-1']}>
+      <Provider store={mockStore(accounts)}>
+        <App />
+      </Provider>
+    </MemoryRouter>
+  );
+
+  expect(wrapper.find(Account)).toHaveProp('account', accounts[0]);
 });
