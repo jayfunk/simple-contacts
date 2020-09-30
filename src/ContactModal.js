@@ -89,7 +89,7 @@ class ContactModal extends Component {
     const contact = this.state.contact;
 
     return (
-      <Modal.Dialog>
+      <Modal show>
         <Modal.Header onHide={this.closeModal} closeButton>
           <Modal.Title>Contact</Modal.Title>
         </Modal.Header>
@@ -158,7 +158,7 @@ class ContactModal extends Component {
             Close
           </Button>
         </Modal.Footer>
-      </Modal.Dialog>
+      </Modal>
     );
   }
 }
