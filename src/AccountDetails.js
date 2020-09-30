@@ -98,11 +98,10 @@ export class AccountDetails extends Component {
   }
 
   handleSubmit(event) {
-    const form = event.currentTarget;
     event.preventDefault();
     event.stopPropagation();
 
-    if (form.checkValidity() === false || this.isValidInput() === false) {
+    if (this.isValidInput() === false) {
       this.setState({
         validated: true
       });

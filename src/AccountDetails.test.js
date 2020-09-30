@@ -5,16 +5,10 @@ import {Form, Button} from 'react-bootstrap';
 import {RATING_WARM, INDUSTRY_SHIPPING, INDUSTRY_MEDIA, RATING_COLD} from './constants';
 import {AccountDetails} from './AccountDetails';
 
-function simulateSubmit(
-  wrapper,
-  preventDefaultMock = jest.fn(),
-  stopPropagationMock = jest.fn(),
-  checkValidityMock = jest.fn(() => true)
-) {
+function simulateSubmit(wrapper, preventDefaultMock = jest.fn(), stopPropagationMock = jest.fn()) {
   wrapper.find(Form).simulate('submit', {
     preventDefault: preventDefaultMock,
-    stopPropagation: stopPropagationMock,
-    currentTarget: {checkValidity: checkValidityMock}
+    stopPropagation: stopPropagationMock
   });
 }
 
@@ -422,13 +416,12 @@ it('should not create the account if the form is not valid', () => {
   changeFormControlValue(wrapper, 'name', 'Updated Name');
   changeFormControlValue(wrapper, 'address', 'New Address');
 
-  simulateSubmit(wrapper, preventDefaultMock, stopPropagationMock, checkValidityMock);
+  simulateSubmit(wrapper, preventDefaultMock, stopPropagationMock);
 
   expect(createAccountMock).not.toHaveBeenCalled();
   expect(updateAccountMock).not.toHaveBeenCalled();
   expect(preventDefaultMock).toHaveBeenCalled();
   expect(stopPropagationMock).toHaveBeenCalled();
-  expect(checkValidityMock).toHaveBeenCalled();
 
   expect(wrapper.find(Form).prop('validated')).toBe(true);
 });
