@@ -31,12 +31,12 @@ export function Accounts(props) {
   return (
     <div className="accounts">
       <InputGroup className="mb-3">
-        <FormControl placeholder="Filter" />
-        <InputGroup.Append>
+        <InputGroup.Prepend>
           <Link className="btn btn-primary" to="/accounts/new">
             Add Account
           </Link>
-        </InputGroup.Append>
+        </InputGroup.Prepend>
+        <FormControl placeholder="Filter" />
       </InputGroup>
       <table className="table">
         <thead className="thead-dark">

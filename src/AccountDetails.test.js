@@ -38,6 +38,7 @@ it('should render existing account', () => {
     <AccountDetails
       createAccount={() => {}}
       updateAccount={() => {}}
+      removeAccount={() => {}}
       history={{}}
       account={{
         id: 1234,
@@ -65,6 +66,7 @@ it('should make the details uneditable when the account exists', () => {
     <AccountDetails
       createAccount={() => {}}
       updateAccount={() => {}}
+      removeAccount={() => {}}
       history={{}}
       account={{
         id: 1234,
@@ -86,17 +88,18 @@ it('should make the details uneditable when the account exists', () => {
   expect(getFormControlDisabled(wrapper, 'rating')).toBe(true);
   expect(getFormControlDisabled(wrapper, 'establishedDate')).toBe(true);
 
-  expect(
-    wrapper
-      .find(Form.Group)
-      .find(Button)
-      .find({name: 'edit'})
-  ).toExist();
+  expect(wrapper.find(Button).find({name: 'edit'})).toExist();
 });
 
 it('should render in edit mode when account is null', () => {
   const wrapper = shallow(
-    <AccountDetails createAccount={() => {}} updateAccount={() => {}} history={{}} account={null} />
+    <AccountDetails
+      createAccount={() => {}}
+      updateAccount={() => {}}
+      removeAccount={() => {}}
+      history={{}}
+      account={null}
+    />
   );
 
   expect(getFormControlDisabled(wrapper, 'name')).toBe(false);
@@ -106,19 +109,11 @@ it('should render in edit mode when account is null', () => {
   expect(getFormControlDisabled(wrapper, 'rating')).toBe(false);
   expect(getFormControlDisabled(wrapper, 'establishedDate')).toBe(false);
 
-  expect(
-    wrapper
-      .find(Form.Group)
-      .find(Button)
-      .find({name: 'save'})
-  ).toExist();
+  expect(wrapper.find(Button).find({name: 'save'})).toExist();
 
-  expect(
-    wrapper
-      .find(Form.Group)
-      .find(Button)
-      .find({name: 'cancel'})
-  ).toExist();
+  expect(wrapper.find(Button).find({name: 'cancel'})).toExist();
+
+  expect(wrapper.find(Button).find({name: 'remove'})).not.toExist();
 });
 
 it('should switch to edit mode when edit button is pressed', () => {
@@ -126,6 +121,7 @@ it('should switch to edit mode when edit button is pressed', () => {
     <AccountDetails
       createAccount={() => {}}
       updateAccount={() => {}}
+      removeAccount={() => {}}
       history={{}}
       account={{
         id: 1234,
@@ -141,7 +137,6 @@ it('should switch to edit mode when edit button is pressed', () => {
   );
 
   wrapper
-    .find(Form.Group)
     .find(Button)
     .find({name: 'edit'})
     .simulate('click', {preventDefault: () => {}});
@@ -153,19 +148,11 @@ it('should switch to edit mode when edit button is pressed', () => {
   expect(getFormControlDisabled(wrapper, 'rating')).toBe(false);
   expect(getFormControlDisabled(wrapper, 'establishedDate')).toBe(false);
 
-  expect(
-    wrapper
-      .find(Form.Group)
-      .find(Button)
-      .find({name: 'save'})
-  ).toExist();
+  expect(wrapper.find(Button).find({name: 'save'})).toExist();
 
-  expect(
-    wrapper
-      .find(Form.Group)
-      .find(Button)
-      .find({name: 'cancel'})
-  ).toExist();
+  expect(wrapper.find(Button).find({name: 'cancel'})).toExist();
+
+  expect(wrapper.find(Button).find({name: 'remove'})).toExist();
 });
 
 it('should update fields on user input', () => {
@@ -173,6 +160,7 @@ it('should update fields on user input', () => {
     <AccountDetails
       createAccount={() => {}}
       updateAccount={() => {}}
+      removeAccount={() => {}}
       history={{}}
       account={{
         id: 1234,
@@ -188,7 +176,6 @@ it('should update fields on user input', () => {
   );
 
   wrapper
-    .find(Form.Group)
     .find(Button)
     .find({name: 'edit'})
     .simulate('click', {preventDefault: () => {}});
@@ -213,6 +200,7 @@ it('should change back to disabled mode and reset changed fields when cancel is 
     <AccountDetails
       createAccount={() => {}}
       updateAccount={() => {}}
+      removeAccount={() => {}}
       history={{}}
       account={{
         id: 1234,
@@ -228,7 +216,6 @@ it('should change back to disabled mode and reset changed fields when cancel is 
   );
 
   wrapper
-    .find(Form.Group)
     .find(Button)
     .find({name: 'edit'})
     .simulate('click', {preventDefault: () => {}});
@@ -241,7 +228,6 @@ it('should change back to disabled mode and reset changed fields when cancel is 
   changeFormControlValue(wrapper, 'establishedDate', '2011-01-13');
 
   wrapper
-    .find(Form.Group)
     .find(Button)
     .find({name: 'cancel'})
     .simulate('click', {preventDefault: () => {}});
@@ -260,12 +246,7 @@ it('should change back to disabled mode and reset changed fields when cancel is 
   expect(getFormControlDisabled(wrapper, 'rating')).toBe(true);
   expect(getFormControlDisabled(wrapper, 'establishedDate')).toBe(true);
 
-  expect(
-    wrapper
-      .find(Form.Group)
-      .find(Button)
-      .find({name: 'edit'})
-  ).toExist('Edit');
+  expect(wrapper.find(Button).find({name: 'edit'})).toExist('Edit');
 });
 
 it('should redirect to the root of the app when cancel is pressed and account was initially null', () => {
@@ -277,13 +258,13 @@ it('should redirect to the root of the app when cancel is pressed and account wa
     <AccountDetails
       createAccount={() => {}}
       updateAccount={() => {}}
+      removeAccount={() => {}}
       account={null}
       history={historyMock}
     />
   );
 
   wrapper
-    .find(Form.Group)
     .find(Button)
     .find({name: 'cancel'})
     .simulate('click', {preventDefault: () => {}});
@@ -299,6 +280,7 @@ it('should call createAccount action creator when save is pressed and account is
     <AccountDetails
       createAccount={createAccountMock}
       updateAccount={updateAccountMock}
+      removeAccount={() => {}}
       history={{}}
       account={null}
     />
@@ -327,21 +309,18 @@ it('should call createAccount action creator when save is pressed and account is
 
   expect(updateAccountMock).not.toHaveBeenCalled();
 
-  expect(
-    wrapper
-      .find(Form.Group)
-      .find(Button)
-      .find({name: 'edit'})
-  ).toExist('Edit');
+  expect(wrapper.find(Button).find({name: 'edit'})).toExist('Edit');
 });
 
 it('should call updateAccount action creator when save is pressed and account is not null', () => {
   const createAccountMock = jest.fn();
   const updateAccountMock = jest.fn();
+
   const wrapper = shallow(
     <AccountDetails
       createAccount={createAccountMock}
       updateAccount={updateAccountMock}
+      removeAccount={() => {}}
       history={{}}
       account={{
         id: 1234,
@@ -357,7 +336,6 @@ it('should call updateAccount action creator when save is pressed and account is
   );
 
   wrapper
-    .find(Form.Group)
     .find(Button)
     .find({name: 'edit'})
     .simulate('click', {preventDefault: () => {}});
@@ -389,12 +367,46 @@ it('should call updateAccount action creator when save is pressed and account is
 
   expect(createAccountMock).not.toHaveBeenCalled();
 
-  expect(
-    wrapper
-      .find(Form.Group)
-      .find(Button)
-      .find({name: 'edit'})
-  ).toExist('Edit');
+  expect(wrapper.find(Button).find({name: 'edit'})).toExist('Edit');
+});
+
+it('should call removeAccount action creator when remove is pressed', () => {
+  const historyMock = {
+    push: jest.fn()
+  };
+  const removeAccountMock = jest.fn();
+
+  const wrapper = shallow(
+    <AccountDetails
+      createAccount={() => {}}
+      updateAccount={() => {}}
+      removeAccount={removeAccountMock}
+      history={historyMock}
+      account={{
+        id: 1234,
+        name: 'Account Name',
+        address: '102 my street austin, texas',
+        industry: INDUSTRY_SHIPPING,
+        annualRevenue: 100000000,
+        rating: RATING_WARM,
+        establishedDate: '2019-12-31',
+        contacts: []
+      }}
+    />
+  );
+
+  wrapper
+    .find(Button)
+    .find({name: 'edit'})
+    .simulate('click', {preventDefault: () => {}});
+
+  wrapper
+    .find(Button)
+    .find({name: 'remove'})
+    .simulate('click', {preventDefault: () => {}});
+
+  expect(removeAccountMock).toHaveBeenCalledWith(1234);
+  expect(historyMock.push).toHaveBeenCalledWith('/');
 });
 
 it('should not create the account if the form is not valid', () => {
@@ -402,12 +414,12 @@ it('should not create the account if the form is not valid', () => {
   const updateAccountMock = jest.fn();
   const preventDefaultMock = jest.fn();
   const stopPropagationMock = jest.fn();
-  const checkValidityMock = jest.fn(() => false);
 
   const wrapper = shallow(
     <AccountDetails
       createAccount={createAccountMock}
       updateAccount={updateAccountMock}
+      removeAccount={() => {}}
       history={{}}
       account={null}
     />

@@ -5,7 +5,7 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 
 import {INDUSTRY_OPTIONS, RATING_OPTIONS, INDUSTRY_AGRICULTURE, RATING_HOT} from './constants';
-import {createAccount, updateAccount} from './actions/accounts';
+import {createAccount, updateAccount, removeAccount} from './actions/accounts';
 
 const REQUIRED_FIELDS = [
   'name',
@@ -21,23 +21,23 @@ export class AccountDetails extends Component {
     super(props);
 
     const account = props.account;
+
     this.state = {
       validated: false,
-      isEditable: account === null,
-      account:
-        account === null
-          ? {
-              name: '',
-              address: '',
-              industry: INDUSTRY_AGRICULTURE,
-              annualRevenue: '',
-              rating: RATING_HOT,
-              establishedDate: ''
-            }
-          : REQUIRED_FIELDS.reduce((memo, fieldKey) => {
-              memo[fieldKey] = account[fieldKey];
-              return memo;
-            }, {})
+      isEditable: this.isNewAccount(),
+      account: this.isNewAccount()
+        ? {
+            name: '',
+            address: '',
+            industry: INDUSTRY_AGRICULTURE,
+            annualRevenue: '',
+            rating: RATING_HOT,
+            establishedDate: ''
+          }
+        : REQUIRED_FIELDS.reduce((memo, fieldKey) => {
+            memo[fieldKey] = account[fieldKey];
+            return memo;
+          }, {})
     };
 
     this.switchToEditable = this.switchToEditable.bind(this);
@@ -45,6 +45,10 @@ export class AccountDetails extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isValidInput = this.isValidInput.bind(this);
+  }
+
+  isNewAccount() {
+    return this.props.account === null;
   }
 
   switchToEditable(event) {
@@ -57,7 +61,7 @@ export class AccountDetails extends Component {
 
   switchToUnEditable(event) {
     event.preventDefault();
-    if (this.props.account === null) {
+    if (this.isNewAccount()) {
       this.props.history.push('/');
     } else {
       this.setState({
@@ -105,7 +109,7 @@ export class AccountDetails extends Component {
       this.setState({
         validated: true
       });
-    } else if (this.props.account === null) {
+    } else if (this.isNewAccount()) {
       this.props.createAccount(this.state.account, this.props.history);
       this.setState({
         isEditable: false
@@ -137,6 +141,21 @@ export class AccountDetails extends Component {
               Cancel
             </Button>
           </Col>
+          {this.isNewAccount() !== true && (
+            <Col xs="auto">
+              <Button
+                variant="danger"
+                name="remove"
+                type="button"
+                onClick={() => {
+                  this.props.removeAccount(this.props.account.id);
+                  this.props.history.push('/');
+                }}
+              >
+                Delete Account
+              </Button>
+            </Col>
+          )}
         </Form.Row>
       );
     }
@@ -252,12 +271,14 @@ AccountDetails.propTypes = {
   account: PropTypes.object,
   history: PropTypes.object.isRequired,
   createAccount: PropTypes.func.isRequired,
-  updateAccount: PropTypes.func.isRequired
+  updateAccount: PropTypes.func.isRequired,
+  removeAccount: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {
   createAccount,
-  updateAccount
+  updateAccount,
+  removeAccount
 };
 
 export default withRouter(
