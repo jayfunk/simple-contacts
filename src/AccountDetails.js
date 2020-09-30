@@ -7,38 +7,49 @@ import {connect} from 'react-redux';
 import {INDUSTRY_OPTIONS, RATING_OPTIONS} from './constants';
 import {createAccount, updateAccount} from './actions/accounts';
 
+const REQUIRED_FIELDS = [
+  'name',
+  'address',
+  'industry',
+  'annualRevenue',
+  'rating',
+  'establishedDate'
+];
+
 export class AccountDetails extends Component {
   constructor(props) {
     super(props);
 
+    const account = props.account;
     this.state = {
-      isEditable: props.account === null,
+      validated: false,
+      isEditable: account === null,
       account:
-        props.account === null
+        account === null
           ? {}
-          : {
-              name: props.account.name,
-              address: props.account.address,
-              industry: props.account.industry,
-              annualRevenue: props.account.annualRevenue,
-              rating: props.account.rating,
-              establishedDate: props.account.establishedDate
-            }
+          : REQUIRED_FIELDS.reduce((memo, fieldKey) => {
+              memo[fieldKey] = account[fieldKey];
+              return memo;
+            }, {})
     };
 
     this.switchToEditable = this.switchToEditable.bind(this);
     this.switchToUnEditable = this.switchToUnEditable.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSave = this.handleSave.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.isValidInput = this.isValidInput.bind(this);
   }
 
-  switchToEditable() {
+  switchToEditable(event) {
+    event.preventDefault();
     this.setState({
-      isEditable: true
+      isEditable: true,
+      validated: false
     });
   }
 
-  switchToUnEditable() {
+  switchToUnEditable(event) {
+    event.preventDefault();
     if (this.props.account === null) {
       this.props.history.push('/');
     } else {
@@ -63,11 +74,41 @@ export class AccountDetails extends Component {
     });
   }
 
-  handleSave() {
-    if (this.props.account === null) {
+  isValidInput() {
+    const account = this.state.account;
+    const accountKeys = Object.keys(account);
+
+    const allFieldsValid = accountKeys.every((key) => {
+      const fieldValue = account[key];
+      if (typeof fieldValue === 'string') {
+        return fieldValue.trim() !== '';
+      }
+      return true;
+    });
+    const hasAllRequiredFields = REQUIRED_FIELDS.every((key) => accountKeys.includes(key));
+
+    return allFieldsValid && hasAllRequiredFields;
+  }
+
+  handleSubmit(event) {
+    const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (form.checkValidity() === false || this.isValidInput() === false) {
+      this.setState({
+        validated: true
+      });
+    } else if (this.props.account === null) {
       this.props.createAccount(this.state.account);
+      this.setState({
+        isEditable: false
+      });
     } else {
       this.props.updateAccount(this.props.account.id, this.state.account);
+      this.setState({
+        isEditable: false
+      });
     }
   }
 
@@ -75,10 +116,10 @@ export class AccountDetails extends Component {
     if (this.state.isEditable) {
       return (
         <React.Fragment>
-          <Button variant="primary" name="save" onClick={this.handleSave}>
+          <Button variant="primary" name="save" type="submit">
             Save
           </Button>
-          <Button variant="secondary" name="cancel" onClick={this.switchToUnEditable}>
+          <Button variant="secondary" name="cancel" type="button" onClick={this.switchToUnEditable}>
             Cancel
           </Button>
         </React.Fragment>
@@ -86,7 +127,7 @@ export class AccountDetails extends Component {
     }
 
     return (
-      <Button variant="secondary" name="edit" onClick={this.switchToEditable}>
+      <Button variant="secondary" name="edit" type="button" onClick={this.switchToEditable}>
         Edit
       </Button>
     );
@@ -98,7 +139,7 @@ export class AccountDetails extends Component {
 
     return (
       <div className="col">
-        <Form>
+        <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
           <Form.Row>
             <Form.Group as={Col} controlId="name">
               <Form.Label>Name</Form.Label>
@@ -106,6 +147,7 @@ export class AccountDetails extends Component {
                 name="name"
                 type="text"
                 disabled={disabled}
+                required
                 value={account.name}
                 onChange={this.handleInputChange}
               />
@@ -116,6 +158,7 @@ export class AccountDetails extends Component {
                 name="address"
                 type="text"
                 disabled={disabled}
+                required
                 value={account.address}
                 onChange={this.handleInputChange}
               />
@@ -126,6 +169,7 @@ export class AccountDetails extends Component {
                 name="industry"
                 as="select"
                 disabled={disabled}
+                required
                 value={account.industry}
                 onChange={this.handleInputChange}
               >
@@ -144,6 +188,7 @@ export class AccountDetails extends Component {
                 name="annualRevenue"
                 type="number"
                 disabled={disabled}
+                required
                 value={account.annualRevenue}
                 onChange={this.handleInputChange}
               />
@@ -154,6 +199,7 @@ export class AccountDetails extends Component {
                 name="rating"
                 as="select"
                 disabled={disabled}
+                required
                 value={account.rating}
                 onChange={this.handleInputChange}
               >
@@ -170,6 +216,7 @@ export class AccountDetails extends Component {
                 name="establishedDate"
                 type="date"
                 disabled={disabled}
+                required
                 value={account.establishedDate}
                 onChange={this.handleInputChange}
               />

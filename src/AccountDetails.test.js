@@ -5,6 +5,19 @@ import {Form, Button} from 'react-bootstrap';
 import {RATING_WARM, INDUSTRY_SHIPPING, INDUSTRY_MEDIA, RATING_COLD} from './constants';
 import {AccountDetails} from './AccountDetails';
 
+function simulateSubmit(
+  wrapper,
+  preventDefaultMock = jest.fn(),
+  stopPropagationMock = jest.fn(),
+  checkValidityMock = jest.fn(() => true)
+) {
+  wrapper.find(Form).simulate('submit', {
+    preventDefault: preventDefaultMock,
+    stopPropagation: stopPropagationMock,
+    currentTarget: {checkValidity: checkValidityMock}
+  });
+}
+
 function changeFormControlValue(wrapper, name, value) {
   wrapper
     .find(Form.Control)
@@ -137,7 +150,7 @@ it('should switch to edit mode when edit button is pressed', () => {
     .find(Form.Group)
     .find(Button)
     .find({name: 'edit'})
-    .simulate('click');
+    .simulate('click', {preventDefault: () => {}});
 
   expect(getFormControlDisabled(wrapper, 'name')).toBe(false);
   expect(getFormControlDisabled(wrapper, 'address')).toBe(false);
@@ -184,7 +197,7 @@ it('should update fields on user input', () => {
     .find(Form.Group)
     .find(Button)
     .find({name: 'edit'})
-    .simulate('click');
+    .simulate('click', {preventDefault: () => {}});
 
   changeFormControlValue(wrapper, 'name', 'Updated Name');
   changeFormControlValue(wrapper, 'address', 'New Address');
@@ -224,7 +237,7 @@ it('should change back to disabled mode and reset changed fields when cancel is 
     .find(Form.Group)
     .find(Button)
     .find({name: 'edit'})
-    .simulate('click');
+    .simulate('click', {preventDefault: () => {}});
 
   changeFormControlValue(wrapper, 'name', 'Updated Name');
   changeFormControlValue(wrapper, 'address', 'New Address');
@@ -237,7 +250,7 @@ it('should change back to disabled mode and reset changed fields when cancel is 
     .find(Form.Group)
     .find(Button)
     .find({name: 'cancel'})
-    .simulate('click');
+    .simulate('click', {preventDefault: () => {}});
 
   expect(getFormControlValue(wrapper, 'name')).toEqual('Account Name');
   expect(getFormControlValue(wrapper, 'address')).toEqual('102 my street austin, texas');
@@ -279,7 +292,7 @@ it('should redirect to the root of the app when cancel is pressed and account wa
     .find(Form.Group)
     .find(Button)
     .find({name: 'cancel'})
-    .simulate('click');
+    .simulate('click', {preventDefault: () => {}});
 
   expect(historyMock.push).toHaveBeenCalledWith('/');
 });
@@ -304,11 +317,7 @@ it('should call createAccount action creator when save is pressed and account is
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
   changeFormControlValue(wrapper, 'establishedDate', '2011-01-13');
 
-  wrapper
-    .find(Form.Group)
-    .find(Button)
-    .find({name: 'save'})
-    .simulate('click');
+  simulateSubmit(wrapper);
 
   expect(createAccountMock).toHaveBeenCalledWith({
     name: 'Updated Name',
@@ -320,6 +329,13 @@ it('should call createAccount action creator when save is pressed and account is
   });
 
   expect(updateAccountMock).not.toHaveBeenCalled();
+
+  expect(
+    wrapper
+      .find(Form.Group)
+      .find(Button)
+      .find({name: 'edit'})
+  ).toExist('Edit');
 });
 
 it('should call updateAccount action creator when save is pressed and account is not null', () => {
@@ -347,7 +363,7 @@ it('should call updateAccount action creator when save is pressed and account is
     .find(Form.Group)
     .find(Button)
     .find({name: 'edit'})
-    .simulate('click');
+    .simulate('click', {preventDefault: () => {}});
 
   changeFormControlValue(wrapper, 'name', 'Updated Name');
   changeFormControlValue(wrapper, 'address', 'New Address');
@@ -363,11 +379,7 @@ it('should call updateAccount action creator when save is pressed and account is
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_COLD);
   expect(getFormControlValue(wrapper, 'establishedDate')).toEqual('2011-01-13');
 
-  wrapper
-    .find(Form.Group)
-    .find(Button)
-    .find({name: 'save'})
-    .simulate('click');
+  simulateSubmit(wrapper);
 
   expect(updateAccountMock).toHaveBeenCalledWith(1234, {
     name: 'Updated Name',
@@ -379,6 +391,41 @@ it('should call updateAccount action creator when save is pressed and account is
   });
 
   expect(createAccountMock).not.toHaveBeenCalled();
+
+  expect(
+    wrapper
+      .find(Form.Group)
+      .find(Button)
+      .find({name: 'edit'})
+  ).toExist('Edit');
 });
 
-it('should validate', () => {});
+it('should not create the account if the form is not valid', () => {
+  const createAccountMock = jest.fn();
+  const updateAccountMock = jest.fn();
+  const preventDefaultMock = jest.fn();
+  const stopPropagationMock = jest.fn();
+  const checkValidityMock = jest.fn(() => false);
+
+  const wrapper = shallow(
+    <AccountDetails
+      createAccount={createAccountMock}
+      updateAccount={updateAccountMock}
+      history={{}}
+      account={null}
+    />
+  );
+
+  changeFormControlValue(wrapper, 'name', 'Updated Name');
+  changeFormControlValue(wrapper, 'address', 'New Address');
+
+  simulateSubmit(wrapper, preventDefaultMock, stopPropagationMock, checkValidityMock);
+
+  expect(createAccountMock).not.toHaveBeenCalled();
+  expect(updateAccountMock).not.toHaveBeenCalled();
+  expect(preventDefaultMock).toHaveBeenCalled();
+  expect(stopPropagationMock).toHaveBeenCalled();
+  expect(checkValidityMock).toHaveBeenCalled();
+
+  expect(wrapper.find(Form).prop('validated')).toBe(true);
+});
