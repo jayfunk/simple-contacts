@@ -9,11 +9,76 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 import App from './App';
+import {
+  LEAD_SOURCE_PHONE,
+  INDUSTRY_UTILITIES,
+  RATING_COLD,
+  INDUSTRY_MANUFACTURING,
+  INDUSTRY_EDUCATION,
+  RATING_HOT,
+  RATING_WARM
+} from './constants';
 
 import accounts from './reducers/accounts';
 
 const store = configureStore({
-  reducer: accounts
+  reducer: accounts,
+  preloadedState: [
+    {
+      id: 'account-1',
+      name: 'Apple inc.',
+      address: 'Apple inc street address',
+      industry: INDUSTRY_UTILITIES,
+      annualRevenue: 1000000000,
+      rating: RATING_COLD,
+      establishedDate: '2010-04-07',
+      contacts: [
+        {
+          id: 'contact-1',
+          name: 'New Contact',
+          phone: '55555555555',
+          email: 'contact1@contacts.com',
+          leadSource: LEAD_SOURCE_PHONE
+        }
+      ]
+    },
+    {
+      id: 'account-2',
+      name: 'ABC Construction',
+      address: 'ABC Construction street address',
+      industry: INDUSTRY_MANUFACTURING,
+      annualRevenue: 10,
+      rating: RATING_HOT,
+      establishedDate: '2011-01-13',
+      contacts: [
+        {
+          id: 'contact-2',
+          name: 'New Contact',
+          phone: '55555555555',
+          email: 'contact1@contacts.com',
+          leadSource: LEAD_SOURCE_PHONE
+        }
+      ]
+    },
+    {
+      id: 'account-3',
+      name: 'Big Town Realty',
+      address: 'Big Town Realty street address',
+      industry: INDUSTRY_EDUCATION,
+      annualRevenue: 941,
+      rating: RATING_WARM,
+      establishedDate: '2012-02-13',
+      contacts: [
+        {
+          id: 'contact-3',
+          name: 'New Contact',
+          phone: '55555555555',
+          email: 'contact1@contacts.com',
+          leadSource: LEAD_SOURCE_PHONE
+        }
+      ]
+    }
+  ]
 });
 
 ReactDOM.render(
