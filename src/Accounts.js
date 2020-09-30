@@ -163,9 +163,9 @@ export class Accounts extends Component {
                 value={this.state.state}
                 onChange={this.handleOneDimensionalFilter}
               >
-                {Object.keys(INDUSTRY_OPTIONS).map((optKey) => (
+                {Object.keys(STATE_OPTIONS).map((optKey) => (
                   <option key={optKey} value={optKey}>
-                    {INDUSTRY_OPTIONS[optKey]}
+                    {STATE_OPTIONS[optKey]}
                   </option>
                 ))}
               </Form.Control>
