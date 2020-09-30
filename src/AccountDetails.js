@@ -121,21 +121,34 @@ export class AccountDetails extends Component {
   renderControlButtons() {
     if (this.state.isEditable) {
       return (
-        <React.Fragment>
-          <Button variant="primary" name="save" type="submit">
-            Save
-          </Button>
-          <Button variant="secondary" name="cancel" type="button" onClick={this.switchToUnEditable}>
-            Cancel
-          </Button>
-        </React.Fragment>
+        <Form.Row>
+          <Col xs="auto">
+            <Button variant="primary" name="save" type="submit">
+              Save
+            </Button>
+          </Col>
+          <Col xs="auto">
+            <Button
+              variant="secondary"
+              name="cancel"
+              type="button"
+              onClick={this.switchToUnEditable}
+            >
+              Cancel
+            </Button>
+          </Col>
+        </Form.Row>
       );
     }
 
     return (
-      <Button variant="secondary" name="edit" type="button" onClick={this.switchToEditable}>
-        Edit
-      </Button>
+      <Form.Row>
+        <Col xs="auto">
+          <Button variant="secondary" name="edit" type="button" onClick={this.switchToEditable}>
+            Edit
+          </Button>
+        </Col>
+      </Form.Row>
     );
   }
 
@@ -228,9 +241,7 @@ export class AccountDetails extends Component {
               />
             </Form.Group>
           </Form.Row>
-          <Form.Row>
-            <Form.Group>{this.renderControlButtons()}</Form.Group>
-          </Form.Row>
+          {this.renderControlButtons()}
         </Form>
       </div>
     );
