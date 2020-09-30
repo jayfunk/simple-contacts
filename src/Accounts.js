@@ -69,7 +69,7 @@ export class Accounts extends Component {
 
   filterByName(account) {
     if (this.state.name) {
-      return account.name.includes(this.state.name);
+      return account.name.toLowerCase().includes(this.state.name.toLowerCase());
     }
     return true;
   }
