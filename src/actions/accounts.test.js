@@ -9,16 +9,21 @@ import {
 import * as constants from '../constants';
 
 test('createAccount creates an account payload with a generated id', () => {
-  expect(
-    createAccount({
+  const historyMock = {
+    push: jest.fn()
+  };
+  const action = createAccount(
+    {
       name: 'New Account',
       address: '102 my street austin, texas',
       industry: 'Agriculture',
       annualRevenue: '$1.2B',
       rating: constants.RATING_HOT,
       establishedDate: '2012-12-31'
-    })
-  ).toEqual({
+    },
+    historyMock
+  );
+  expect(action).toEqual({
     type: createAccount.type,
     payload: {
       id: expect.anything(),
@@ -30,6 +35,8 @@ test('createAccount creates an account payload with a generated id', () => {
       establishedDate: '2012-12-31'
     }
   });
+
+  expect(historyMock.push).toHaveBeenCalledWith(`/accounts/${action.payload.id}`);
 });
 
 test('updateAccount generates an update account action', () => {

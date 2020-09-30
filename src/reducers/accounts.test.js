@@ -9,6 +9,10 @@ import {
   removeContact
 } from '../actions/accounts';
 
+const historyMock = {
+  push: jest.fn()
+};
+
 it('should set its default state to an empty array', () => {
   expect(reducer()).toEqual([]);
 });
@@ -17,11 +21,14 @@ it('should create a new account', () => {
   expect(
     reducer(
       reducer(),
-      createAccount({
-        name: 'New Account',
-        address: '1234 mini lane boston, ma',
-        industry: constants.INDUSTRY_APPAREL
-      })
+      createAccount(
+        {
+          name: 'New Account',
+          address: '1234 mini lane boston, ma',
+          industry: constants.INDUSTRY_APPAREL
+        },
+        historyMock
+      )
     )
   ).toEqual([
     {
@@ -35,16 +42,22 @@ it('should create a new account', () => {
 });
 
 it('should update an existing account', () => {
-  const account1Action = createAccount({
-    name: 'Account 1',
-    address: '1234 mini lane boston, ma',
-    industry: constants.INDUSTRY_APPAREL
-  });
-  const account2Action = createAccount({
-    name: 'Account 2',
-    address: '1 congress ave austin, tx',
-    raiting: constants.RATING_HOT
-  });
+  const account1Action = createAccount(
+    {
+      name: 'Account 1',
+      address: '1234 mini lane boston, ma',
+      industry: constants.INDUSTRY_APPAREL
+    },
+    historyMock
+  );
+  const account2Action = createAccount(
+    {
+      name: 'Account 2',
+      address: '1 congress ave austin, tx',
+      raiting: constants.RATING_HOT
+    },
+    historyMock
+  );
   const accountId = account1Action.payload.id;
   let state = reducer(reducer(), account1Action);
   state = reducer(state, account2Action);
@@ -77,16 +90,22 @@ it('should update an existing account', () => {
 });
 
 it('should update an account and ignore an id in the update payload ', () => {
-  const account1Action = createAccount({
-    name: 'Account 1',
-    address: '1234 mini lane boston, ma',
-    industry: constants.INDUSTRY_APPAREL
-  });
-  const account2Action = createAccount({
-    name: 'Account 2',
-    address: '1 congress ave austin, tx',
-    raiting: constants.RATING_HOT
-  });
+  const account1Action = createAccount(
+    {
+      name: 'Account 1',
+      address: '1234 mini lane boston, ma',
+      industry: constants.INDUSTRY_APPAREL
+    },
+    historyMock
+  );
+  const account2Action = createAccount(
+    {
+      name: 'Account 2',
+      address: '1 congress ave austin, tx',
+      raiting: constants.RATING_HOT
+    },
+    historyMock
+  );
   const accountId = account1Action.payload.id;
   let state = reducer(reducer(), account1Action);
   state = reducer(state, account2Action);
@@ -120,11 +139,14 @@ it('should update an account and ignore an id in the update payload ', () => {
 });
 
 it('should update an account and ignore a contacts field in the update payload ', () => {
-  const account1Action = createAccount({
-    name: 'Account 1',
-    address: '1234 mini lane boston, ma',
-    industry: constants.INDUSTRY_APPAREL
-  });
+  const account1Action = createAccount(
+    {
+      name: 'Account 1',
+      address: '1234 mini lane boston, ma',
+      industry: constants.INDUSTRY_APPAREL
+    },
+    historyMock
+  );
   const accountId = account1Action.payload.id;
   const state = reducer(reducer(), account1Action);
 
@@ -150,16 +172,22 @@ it('should update an account and ignore a contacts field in the update payload '
 });
 
 it('should delete an account', () => {
-  const account1Action = createAccount({
-    name: 'Account 1',
-    address: '1234 mini lane boston, ma',
-    industry: constants.INDUSTRY_APPAREL
-  });
-  const account2Action = createAccount({
-    name: 'Account 2',
-    address: '1 congress ave austin, tx',
-    raiting: constants.RATING_HOT
-  });
+  const account1Action = createAccount(
+    {
+      name: 'Account 1',
+      address: '1234 mini lane boston, ma',
+      industry: constants.INDUSTRY_APPAREL
+    },
+    historyMock
+  );
+  const account2Action = createAccount(
+    {
+      name: 'Account 2',
+      address: '1 congress ave austin, tx',
+      raiting: constants.RATING_HOT
+    },
+    historyMock
+  );
   const accountId = account2Action.payload.id;
   let state = reducer(reducer(), account1Action);
   state = reducer(state, account2Action);
@@ -176,11 +204,14 @@ it('should delete an account', () => {
 });
 
 it('should add a contact to an account', () => {
-  const account1Action = createAccount({
-    name: 'Account 1',
-    address: '1234 mini lane boston, ma',
-    industry: constants.INDUSTRY_APPAREL
-  });
+  const account1Action = createAccount(
+    {
+      name: 'Account 1',
+      address: '1234 mini lane boston, ma',
+      industry: constants.INDUSTRY_APPAREL
+    },
+    historyMock
+  );
   const accountId = account1Action.payload.id;
   const state = reducer(reducer(), account1Action);
 
@@ -211,11 +242,14 @@ it('should add a contact to an account', () => {
 });
 
 it('should update an accounts contact', () => {
-  const account1Action = createAccount({
-    name: 'Account 1',
-    address: '1234 mini lane boston, ma',
-    industry: constants.INDUSTRY_APPAREL
-  });
+  const account1Action = createAccount(
+    {
+      name: 'Account 1',
+      address: '1234 mini lane boston, ma',
+      industry: constants.INDUSTRY_APPAREL
+    },
+    historyMock
+  );
   const accountId = account1Action.payload.id;
 
   const addContactAction = addContact(accountId, {
@@ -254,11 +288,14 @@ it('should update an accounts contact', () => {
 });
 
 it('should update an accounts contact and ignore an id field in the update', () => {
-  const account1Action = createAccount({
-    name: 'Account 1',
-    address: '1234 mini lane boston, ma',
-    industry: constants.INDUSTRY_APPAREL
-  });
+  const account1Action = createAccount(
+    {
+      name: 'Account 1',
+      address: '1234 mini lane boston, ma',
+      industry: constants.INDUSTRY_APPAREL
+    },
+    historyMock
+  );
   const accountId = account1Action.payload.id;
 
   const addContactAction = addContact(accountId, {
@@ -298,11 +335,14 @@ it('should update an accounts contact and ignore an id field in the update', () 
 });
 
 it('should remove a contact from an account', () => {
-  const account1Action = createAccount({
-    name: 'Account 1',
-    address: '1234 mini lane boston, ma',
-    industry: constants.INDUSTRY_APPAREL
-  });
+  const account1Action = createAccount(
+    {
+      name: 'Account 1',
+      address: '1234 mini lane boston, ma',
+      industry: constants.INDUSTRY_APPAREL
+    },
+    historyMock
+  );
   const accountId = account1Action.payload.id;
 
   const addContact1Action = addContact(accountId, {

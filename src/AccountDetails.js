@@ -4,7 +4,7 @@ import {Form, Button, Col} from 'react-bootstrap';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 
-import {INDUSTRY_OPTIONS, RATING_OPTIONS} from './constants';
+import {INDUSTRY_OPTIONS, RATING_OPTIONS, INDUSTRY_AGRICULTURE, RATING_HOT} from './constants';
 import {createAccount, updateAccount} from './actions/accounts';
 
 const REQUIRED_FIELDS = [
@@ -26,7 +26,14 @@ export class AccountDetails extends Component {
       isEditable: account === null,
       account:
         account === null
-          ? {}
+          ? {
+              name: '',
+              address: '',
+              industry: INDUSTRY_AGRICULTURE,
+              annualRevenue: '',
+              rating: RATING_HOT,
+              establishedDate: ''
+            }
           : REQUIRED_FIELDS.reduce((memo, fieldKey) => {
               memo[fieldKey] = account[fieldKey];
               return memo;
@@ -83,7 +90,7 @@ export class AccountDetails extends Component {
       if (typeof fieldValue === 'string') {
         return fieldValue.trim() !== '';
       }
-      return true;
+      return fieldValue !== -1;
     });
     const hasAllRequiredFields = REQUIRED_FIELDS.every((key) => accountKeys.includes(key));
 
@@ -100,7 +107,7 @@ export class AccountDetails extends Component {
         validated: true
       });
     } else if (this.props.account === null) {
-      this.props.createAccount(this.state.account);
+      this.props.createAccount(this.state.account, this.props.history);
       this.setState({
         isEditable: false
       });

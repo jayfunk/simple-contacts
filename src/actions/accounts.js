@@ -1,10 +1,13 @@
 import {createAction, nanoid} from '@reduxjs/toolkit';
 
-export const createAccount = createAction('accounts/create', (accountDetails) => {
+export const createAccount = createAction('accounts/create', (accountDetails, history) => {
+  const id = nanoid();
+  history.push(`/accounts/${id}`);
+
   return {
     payload: {
       ...accountDetails,
-      id: nanoid()
+      id
     }
   };
 });

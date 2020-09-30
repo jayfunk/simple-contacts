@@ -319,14 +319,17 @@ it('should call createAccount action creator when save is pressed and account is
 
   simulateSubmit(wrapper);
 
-  expect(createAccountMock).toHaveBeenCalledWith({
-    name: 'Updated Name',
-    address: 'New Address',
-    industry: INDUSTRY_MEDIA,
-    annualRevenue: 100,
-    rating: RATING_COLD,
-    establishedDate: '2011-01-13'
-  });
+  expect(createAccountMock).toHaveBeenCalledWith(
+    {
+      name: 'Updated Name',
+      address: 'New Address',
+      industry: INDUSTRY_MEDIA,
+      annualRevenue: 100,
+      rating: RATING_COLD,
+      establishedDate: '2011-01-13'
+    },
+    {}
+  );
 
   expect(updateAccountMock).not.toHaveBeenCalled();
 
