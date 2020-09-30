@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Form, Button, Col} from 'react-bootstrap';
+import {Form, Button, Col, Jumbotron} from 'react-bootstrap';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 
@@ -176,7 +176,7 @@ export class AccountDetails extends Component {
     const disabled = this.state.isEditable === false;
 
     return (
-      <div className="col">
+      <Jumbotron className="col">
         <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
           <Form.Row>
             <Form.Group as={Col} controlId="name">
@@ -262,7 +262,7 @@ export class AccountDetails extends Component {
           </Form.Row>
           {this.renderControlButtons()}
         </Form>
-      </div>
+      </Jumbotron>
     );
   }
 }

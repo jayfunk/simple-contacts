@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button} from 'react-bootstrap';
+import {Button, Table} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {withRouter, Link, Switch, Route, Redirect} from 'react-router-dom';
 
@@ -20,6 +20,7 @@ function renderContacts(history, accountId, contacts, removeContact) {
           <Button
             className="edit"
             variant="info"
+            size="sm"
             onClick={() => {
               history.push(`/accounts/${accountId}/contacts/${contact.id}`);
             }}
@@ -43,6 +44,7 @@ function renderContacts(history, accountId, contacts, removeContact) {
           <Button
             className="delete"
             variant="danger"
+            size="sm"
             onClick={() => {
               removeContact(accountId, contact.id);
             }}
@@ -70,25 +72,29 @@ function renderContacts(history, accountId, contacts, removeContact) {
 
 export function Contacts(props) {
   return (
-    <div className="col contacts">
-      <Link className="btn btn-primary" to={`${props.match.url}/contacts/new`}>
-        Add Contact
-      </Link>
-      <table className="table">
-        <thead className="thead-dark">
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Email</th>
-            <th scope="col">Lead Source</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {renderContacts(props.history, props.accountId, props.contacts, props.removeContact)}
-        </tbody>
-      </table>
+    <React.Fragment>
+      <div className="row">
+        <Link className="mb-3 btn btn-primary" to={`${props.match.url}/contacts/new`}>
+          Add Contact
+        </Link>
+      </div>
+      <div className="row">
+        <Table striped bordered hover>
+          <thead className="thead-dark">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Email</th>
+              <th scope="col">Lead Source</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {renderContacts(props.history, props.accountId, props.contacts, props.removeContact)}
+          </tbody>
+        </Table>
+      </div>
       <Switch>
         <Route path={`${props.match.path}/contacts/new`}>
           <ContactModal
@@ -123,7 +129,7 @@ export function Contacts(props) {
           }}
         />
       </Switch>
-    </div>
+    </React.Fragment>
   );
 }
 
