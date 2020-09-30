@@ -138,7 +138,7 @@ export class Accounts extends Component {
         {options[optKey]}
       </option>
     ));
-    renderedOptions.unshift(<option key="blank" selected value=""></option>);
+    renderedOptions.unshift(<option key="blank" value=""></option>);
     return renderedOptions;
   }
 
