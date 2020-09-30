@@ -1,23 +1,35 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Form, Button, Col} from 'react-bootstrap';
+import {withRouter} from 'react-router';
+import {connect} from 'react-redux';
 
 import {INDUSTRY_OPTIONS, RATING_OPTIONS} from './constants';
+import {createAccount, updateAccount} from './actions/accounts';
 
-class AccountDetails extends Component {
+export class AccountDetails extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       isEditable: props.account === null,
-      account: {
-        ...props.account
-      }
+      account:
+        props.account === null
+          ? {}
+          : {
+              name: props.account.name,
+              address: props.account.address,
+              industry: props.account.industry,
+              annualRevenue: props.account.annualRevenue,
+              rating: props.account.rating,
+              establishedDate: props.account.establishedDate
+            }
     };
 
     this.switchToEditable = this.switchToEditable.bind(this);
     this.switchToUnEditable = this.switchToUnEditable.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   switchToEditable() {
@@ -27,12 +39,16 @@ class AccountDetails extends Component {
   }
 
   switchToUnEditable() {
-    this.setState({
-      isEditable: false,
-      account: {
-        ...this.props.account
-      }
-    });
+    if (this.props.account === null) {
+      this.props.history.push('/');
+    } else {
+      this.setState({
+        isEditable: false,
+        account: {
+          ...this.props.account
+        }
+      });
+    }
   }
 
   handleInputChange(event) {
@@ -47,11 +63,19 @@ class AccountDetails extends Component {
     });
   }
 
+  handleSave() {
+    if (this.props.account === null) {
+      this.props.createAccount(this.state.account);
+    } else {
+      this.props.updateAccount(this.props.account.id, this.state.account);
+    }
+  }
+
   renderControlButtons() {
     if (this.state.isEditable) {
       return (
         <React.Fragment>
-          <Button variant="primary" name="save">
+          <Button variant="primary" name="save" onClick={this.handleSave}>
             Save
           </Button>
           <Button variant="secondary" name="cancel" onClick={this.switchToUnEditable}>
@@ -161,7 +185,20 @@ class AccountDetails extends Component {
 }
 
 AccountDetails.propTypes = {
-  account: PropTypes.object
+  account: PropTypes.object,
+  history: PropTypes.object.isRequired,
+  createAccount: PropTypes.func.isRequired,
+  updateAccount: PropTypes.func.isRequired
 };
 
-export default AccountDetails;
+const mapDispatchToProps = {
+  createAccount,
+  updateAccount
+};
+
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(AccountDetails)
+);
