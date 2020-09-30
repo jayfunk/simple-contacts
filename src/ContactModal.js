@@ -89,8 +89,8 @@ class ContactModal extends Component {
     const contact = this.state.contact;
 
     return (
-      <Modal show>
-        <Modal.Header onHide={this.closeModal} closeButton>
+      <Modal show onHide={this.closeModal}>
+        <Modal.Header closeButton>
           <Modal.Title>Contact</Modal.Title>
         </Modal.Header>
 
