@@ -132,6 +132,16 @@ export class Accounts extends Component {
     return true;
   }
 
+  renderSelectOptions(options) {
+    const renderedOptions = Object.keys(options).map((optKey) => (
+      <option key={optKey} value={optKey}>
+        {options[optKey]}
+      </option>
+    ));
+    renderedOptions.unshift(<option key="blank" selected value=""></option>);
+    return renderedOptions;
+  }
+
   renderFilterForm() {
     return (
       <Jumbotron>
@@ -163,11 +173,7 @@ export class Accounts extends Component {
                 value={this.state.state}
                 onChange={this.handleOneDimensionalFilter}
               >
-                {Object.keys(STATE_OPTIONS).map((optKey) => (
-                  <option key={optKey} value={optKey}>
-                    {STATE_OPTIONS[optKey]}
-                  </option>
-                ))}
+                {this.renderSelectOptions(STATE_OPTIONS)}
               </Form.Control>
             </Col>
           </Form.Group>
@@ -183,11 +189,7 @@ export class Accounts extends Component {
                 as="select"
                 onChange={this.handleOneDimensionalFilter}
               >
-                {Object.keys(INDUSTRY_OPTIONS).map((optKey) => (
-                  <option key={optKey} value={optKey}>
-                    {INDUSTRY_OPTIONS[optKey]}
-                  </option>
-                ))}
+                {this.renderSelectOptions(INDUSTRY_OPTIONS)}
               </Form.Control>
             </Col>
           </Form.Group>
@@ -232,11 +234,7 @@ export class Accounts extends Component {
                 as="select"
                 onChange={this.handleOneDimensionalFilter}
               >
-                {Object.keys(RATING_OPTIONS).map((optKey) => (
-                  <option key={optKey} value={optKey}>
-                    {RATING_OPTIONS[optKey]}
-                  </option>
-                ))}
+                {this.renderSelectOptions(RATING_OPTIONS)}
               </Form.Control>
             </Col>
           </Form.Group>
