@@ -43,7 +43,11 @@ it('should render existing account', () => {
       account={{
         id: 1234,
         name: 'Account Name',
-        address: '102 my street austin, texas',
+        address: {
+          street: '999 Old St',
+          city: 'Atlanta',
+          state: 'GA'
+        },
         industry: INDUSTRY_SHIPPING,
         annualRevenue: 100000000,
         rating: RATING_WARM,
@@ -54,7 +58,9 @@ it('should render existing account', () => {
   );
 
   expect(getFormControlValue(wrapper, 'name')).toEqual('Account Name');
-  expect(getFormControlValue(wrapper, 'address')).toEqual('102 my street austin, texas');
+  expect(getFormControlValue(wrapper, 'street')).toEqual('999 Old St');
+  expect(getFormControlValue(wrapper, 'city')).toEqual('Atlanta');
+  expect(getFormControlValue(wrapper, 'state')).toEqual('GA');
   expect(getFormControlValue(wrapper, 'industry')).toEqual('shipping');
   expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual(100000000);
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_WARM);
@@ -71,7 +77,11 @@ it('should make the details uneditable when the account exists', () => {
       account={{
         id: 1234,
         name: 'Account Name',
-        address: '102 my street austin, texas',
+        address: {
+          street: '999 Old St',
+          city: 'Atlanta',
+          state: 'GA'
+        },
         industry: INDUSTRY_SHIPPING,
         annualRevenue: 100000000,
         rating: RATING_WARM,
@@ -82,7 +92,9 @@ it('should make the details uneditable when the account exists', () => {
   );
 
   expect(getFormControlDisabled(wrapper, 'name')).toBe(true);
-  expect(getFormControlDisabled(wrapper, 'address')).toBe(true);
+  expect(getFormControlDisabled(wrapper, 'street')).toBe(true);
+  expect(getFormControlDisabled(wrapper, 'city')).toBe(true);
+  expect(getFormControlDisabled(wrapper, 'state')).toBe(true);
   expect(getFormControlDisabled(wrapper, 'industry')).toBe(true);
   expect(getFormControlDisabled(wrapper, 'annualRevenue')).toBe(true);
   expect(getFormControlDisabled(wrapper, 'rating')).toBe(true);
@@ -103,7 +115,9 @@ it('should render in edit mode when account is null', () => {
   );
 
   expect(getFormControlDisabled(wrapper, 'name')).toBe(false);
-  expect(getFormControlDisabled(wrapper, 'address')).toBe(false);
+  expect(getFormControlDisabled(wrapper, 'street')).toBe(false);
+  expect(getFormControlDisabled(wrapper, 'city')).toBe(false);
+  expect(getFormControlDisabled(wrapper, 'state')).toBe(false);
   expect(getFormControlDisabled(wrapper, 'industry')).toBe(false);
   expect(getFormControlDisabled(wrapper, 'annualRevenue')).toBe(false);
   expect(getFormControlDisabled(wrapper, 'rating')).toBe(false);
@@ -126,7 +140,11 @@ it('should switch to edit mode when edit button is pressed', () => {
       account={{
         id: 1234,
         name: 'Account Name',
-        address: '102 my street austin, texas',
+        address: {
+          street: '999 Old St',
+          city: 'Atlanta',
+          state: 'GA'
+        },
         industry: INDUSTRY_SHIPPING,
         annualRevenue: 100000000,
         rating: RATING_WARM,
@@ -142,7 +160,9 @@ it('should switch to edit mode when edit button is pressed', () => {
     .simulate('click', {preventDefault: () => {}});
 
   expect(getFormControlDisabled(wrapper, 'name')).toBe(false);
-  expect(getFormControlDisabled(wrapper, 'address')).toBe(false);
+  expect(getFormControlDisabled(wrapper, 'street')).toBe(false);
+  expect(getFormControlDisabled(wrapper, 'city')).toBe(false);
+  expect(getFormControlDisabled(wrapper, 'state')).toBe(false);
   expect(getFormControlDisabled(wrapper, 'industry')).toBe(false);
   expect(getFormControlDisabled(wrapper, 'annualRevenue')).toBe(false);
   expect(getFormControlDisabled(wrapper, 'rating')).toBe(false);
@@ -165,7 +185,11 @@ it('should update fields on user input', () => {
       account={{
         id: 1234,
         name: 'Account Name',
-        address: '102 my street austin, texas',
+        address: {
+          street: '999 Old St',
+          city: 'Atlanta',
+          state: 'GA'
+        },
         industry: INDUSTRY_SHIPPING,
         annualRevenue: 100000000,
         rating: RATING_WARM,
@@ -181,21 +205,25 @@ it('should update fields on user input', () => {
     .simulate('click', {preventDefault: () => {}});
 
   changeFormControlValue(wrapper, 'name', 'Updated Name');
-  changeFormControlValue(wrapper, 'address', 'New Address');
+  changeFormControlValue(wrapper, 'street', '102 Sunset Blvd');
+  changeFormControlValue(wrapper, 'city', 'Austin');
+  changeFormControlValue(wrapper, 'state', 'TX');
   changeFormControlValue(wrapper, 'industry', INDUSTRY_MEDIA);
   changeFormControlValue(wrapper, 'annualRevenue', 100);
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
   changeFormControlValue(wrapper, 'establishedDate', '2011-01-13');
 
   expect(getFormControlValue(wrapper, 'name')).toEqual('Updated Name');
-  expect(getFormControlValue(wrapper, 'address')).toEqual('New Address');
+  expect(getFormControlValue(wrapper, 'street')).toEqual('102 Sunset Blvd');
+  expect(getFormControlValue(wrapper, 'city')).toEqual('Austin');
+  expect(getFormControlValue(wrapper, 'state')).toEqual('TX');
   expect(getFormControlValue(wrapper, 'industry')).toEqual(INDUSTRY_MEDIA);
   expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual(100);
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_COLD);
   expect(getFormControlValue(wrapper, 'establishedDate')).toEqual('2011-01-13');
 });
 
-it('should change back to disabled mode and reset changed fields when cancel is pressed', () => {
+it.only('should change back to disabled mode and reset changed fields when cancel is pressed', () => {
   const wrapper = shallow(
     <AccountDetails
       createAccount={() => {}}
@@ -205,7 +233,11 @@ it('should change back to disabled mode and reset changed fields when cancel is 
       account={{
         id: 1234,
         name: 'Account Name',
-        address: '102 my street austin, texas',
+        address: {
+          street: '999 Old St',
+          city: 'Atlanta',
+          state: 'GA'
+        },
         industry: INDUSTRY_SHIPPING,
         annualRevenue: 100000000,
         rating: RATING_WARM,
@@ -221,7 +253,9 @@ it('should change back to disabled mode and reset changed fields when cancel is 
     .simulate('click', {preventDefault: () => {}});
 
   changeFormControlValue(wrapper, 'name', 'Updated Name');
-  changeFormControlValue(wrapper, 'address', 'New Address');
+  changeFormControlValue(wrapper, 'street', '102 Sunset Blvd');
+  changeFormControlValue(wrapper, 'city', 'Austin');
+  changeFormControlValue(wrapper, 'state', 'TX');
   changeFormControlValue(wrapper, 'industry', INDUSTRY_MEDIA);
   changeFormControlValue(wrapper, 'annualRevenue', 100);
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
@@ -233,14 +267,18 @@ it('should change back to disabled mode and reset changed fields when cancel is 
     .simulate('click', {preventDefault: () => {}});
 
   expect(getFormControlValue(wrapper, 'name')).toEqual('Account Name');
-  expect(getFormControlValue(wrapper, 'address')).toEqual('102 my street austin, texas');
+  expect(getFormControlValue(wrapper, 'street')).toEqual('999 Old St');
+  expect(getFormControlValue(wrapper, 'city')).toEqual('Atlanta');
+  expect(getFormControlValue(wrapper, 'state')).toEqual('GA');
   expect(getFormControlValue(wrapper, 'industry')).toEqual('shipping');
   expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual(100000000);
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_WARM);
   expect(getFormControlValue(wrapper, 'establishedDate')).toEqual('2019-12-31');
 
   expect(getFormControlDisabled(wrapper, 'name')).toBe(true);
-  expect(getFormControlDisabled(wrapper, 'address')).toBe(true);
+  expect(getFormControlDisabled(wrapper, 'street')).toBe(true);
+  expect(getFormControlDisabled(wrapper, 'city')).toBe(true);
+  expect(getFormControlDisabled(wrapper, 'state')).toBe(true);
   expect(getFormControlDisabled(wrapper, 'industry')).toBe(true);
   expect(getFormControlDisabled(wrapper, 'annualRevenue')).toBe(true);
   expect(getFormControlDisabled(wrapper, 'rating')).toBe(true);
@@ -287,7 +325,9 @@ it('should call createAccount action creator when save is pressed and account is
   );
 
   changeFormControlValue(wrapper, 'name', 'Updated Name');
-  changeFormControlValue(wrapper, 'address', 'New Address');
+  changeFormControlValue(wrapper, 'street', '102 Sunset Blvd');
+  changeFormControlValue(wrapper, 'city', 'Austin');
+  changeFormControlValue(wrapper, 'state', 'TX');
   changeFormControlValue(wrapper, 'industry', INDUSTRY_MEDIA);
   changeFormControlValue(wrapper, 'annualRevenue', 100);
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
@@ -298,7 +338,11 @@ it('should call createAccount action creator when save is pressed and account is
   expect(createAccountMock).toHaveBeenCalledWith(
     {
       name: 'Updated Name',
-      address: 'New Address',
+      address: {
+        street: '102 Sunset Blvd',
+        city: 'Austin',
+        state: 'TX'
+      },
       industry: INDUSTRY_MEDIA,
       annualRevenue: 100,
       rating: RATING_COLD,
@@ -325,7 +369,11 @@ it('should call updateAccount action creator when save is pressed and account is
       account={{
         id: 1234,
         name: 'Account Name',
-        address: '102 my street austin, texas',
+        address: {
+          street: '999 Old St',
+          city: 'Atlanta',
+          state: 'GA'
+        },
         industry: INDUSTRY_SHIPPING,
         annualRevenue: 100000000,
         rating: RATING_WARM,
@@ -341,14 +389,18 @@ it('should call updateAccount action creator when save is pressed and account is
     .simulate('click', {preventDefault: () => {}});
 
   changeFormControlValue(wrapper, 'name', 'Updated Name');
-  changeFormControlValue(wrapper, 'address', 'New Address');
+  changeFormControlValue(wrapper, 'street', '102 Sunset Blvd');
+  changeFormControlValue(wrapper, 'city', 'Austin');
+  changeFormControlValue(wrapper, 'state', 'TX');
   changeFormControlValue(wrapper, 'industry', INDUSTRY_MEDIA);
   changeFormControlValue(wrapper, 'annualRevenue', 100);
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
   changeFormControlValue(wrapper, 'establishedDate', '2011-01-13');
 
   expect(getFormControlValue(wrapper, 'name')).toEqual('Updated Name');
-  expect(getFormControlValue(wrapper, 'address')).toEqual('New Address');
+  expect(getFormControlValue(wrapper, 'street')).toEqual('102 Sunset Blvd');
+  expect(getFormControlValue(wrapper, 'city')).toEqual('Austin');
+  expect(getFormControlValue(wrapper, 'state')).toEqual('TX');
   expect(getFormControlValue(wrapper, 'industry')).toEqual(INDUSTRY_MEDIA);
   expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual(100);
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_COLD);
@@ -358,7 +410,11 @@ it('should call updateAccount action creator when save is pressed and account is
 
   expect(updateAccountMock).toHaveBeenCalledWith(1234, {
     name: 'Updated Name',
-    address: 'New Address',
+    address: {
+      street: '102 Sunset Blvd',
+      city: 'Austin',
+      state: 'TX'
+    },
     industry: INDUSTRY_MEDIA,
     annualRevenue: 100,
     rating: RATING_COLD,
@@ -385,7 +441,11 @@ it('should call removeAccount action creator when remove is pressed', () => {
       account={{
         id: 1234,
         name: 'Account Name',
-        address: '102 my street austin, texas',
+        address: {
+          street: '999 Old St',
+          city: 'Atlanta',
+          state: 'GA'
+        },
         industry: INDUSTRY_SHIPPING,
         annualRevenue: 100000000,
         rating: RATING_WARM,
@@ -426,7 +486,6 @@ it('should not create the account if the form is not valid', () => {
   );
 
   changeFormControlValue(wrapper, 'name', 'Updated Name');
-  changeFormControlValue(wrapper, 'address', 'New Address');
 
   simulateSubmit(wrapper, preventDefaultMock, stopPropagationMock);
 

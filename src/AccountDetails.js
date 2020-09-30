@@ -9,7 +9,9 @@ import {createAccount, updateAccount, removeAccount} from './actions/accounts';
 
 const REQUIRED_FIELDS = [
   'name',
-  'address',
+  'street',
+  'city',
+  'state',
   'industry',
   'annualRevenue',
   'rating',
@@ -28,16 +30,15 @@ export class AccountDetails extends Component {
       account: this.isNewAccount()
         ? {
             name: '',
-            address: '',
+            street: '',
+            city: '',
+            state: '',
             industry: INDUSTRY_AGRICULTURE,
             annualRevenue: '',
             rating: RATING_HOT,
             establishedDate: ''
           }
-        : REQUIRED_FIELDS.reduce((memo, fieldKey) => {
-            memo[fieldKey] = account[fieldKey];
-            return memo;
-          }, {})
+        : this.copyAccountToStateForm(account)
     };
 
     this.switchToEditable = this.switchToEditable.bind(this);
@@ -45,6 +46,17 @@ export class AccountDetails extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isValidInput = this.isValidInput.bind(this);
+  }
+
+  copyAccountToStateForm(account) {
+    return REQUIRED_FIELDS.reduce((memo, fieldKey) => {
+      if (fieldKey === 'street' || fieldKey === 'city' || fieldKey === 'state') {
+        memo[fieldKey] = account.address[fieldKey];
+      } else {
+        memo[fieldKey] = account[fieldKey];
+      }
+      return memo;
+    }, {});
   }
 
   isNewAccount() {
@@ -66,9 +78,7 @@ export class AccountDetails extends Component {
     } else {
       this.setState({
         isEditable: false,
-        account: {
-          ...this.props.account
-        }
+        account: this.copyAccountToStateForm(this.props.account)
       });
     }
   }
@@ -109,16 +119,27 @@ export class AccountDetails extends Component {
       this.setState({
         validated: true
       });
-    } else if (this.isNewAccount()) {
-      this.props.createAccount(this.state.account, this.props.history);
-      this.setState({
-        isEditable: false
-      });
     } else {
-      this.props.updateAccount(this.props.account.id, this.state.account);
+      const account = {
+        ...this.state.account,
+        address: {
+          street: this.state.account['street'],
+          city: this.state.account['city'],
+          state: this.state.account['state']
+        }
+      };
+      delete account.street;
+      delete account.city;
+      delete account.state;
+
       this.setState({
         isEditable: false
       });
+      if (this.isNewAccount()) {
+        this.props.createAccount(account, this.props.history);
+      } else {
+        this.props.updateAccount(this.props.account.id, account);
+      }
     }
   }
 
@@ -190,17 +211,6 @@ export class AccountDetails extends Component {
                 onChange={this.handleInputChange}
               />
             </Form.Group>
-            <Form.Group as={Col} controlId="address">
-              <Form.Label>Physical Address</Form.Label>
-              <Form.Control
-                name="address"
-                type="text"
-                disabled={disabled}
-                required
-                value={account.address}
-                onChange={this.handleInputChange}
-              />
-            </Form.Group>
             <Form.Group as={Col} controlId="industry">
               <Form.Label>Industry</Form.Label>
               <Form.Control
@@ -209,6 +219,47 @@ export class AccountDetails extends Component {
                 disabled={disabled}
                 required
                 value={account.industry}
+                onChange={this.handleInputChange}
+              >
+                {Object.keys(INDUSTRY_OPTIONS).map((optKey) => (
+                  <option key={optKey} value={optKey}>
+                    {INDUSTRY_OPTIONS[optKey]}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} controlId="street">
+              <Form.Label>Street</Form.Label>
+              <Form.Control
+                name="street"
+                type="text"
+                disabled={disabled}
+                required
+                value={account.street}
+                onChange={this.handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group as={Col} controlId="city">
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                name="city"
+                type="text"
+                disabled={disabled}
+                required
+                value={account.city}
+                onChange={this.handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group as={Col} controlId="state">
+              <Form.Label>State</Form.Label>
+              <Form.Control
+                name="state"
+                as="select"
+                disabled={disabled}
+                required
+                value={account.state}
                 onChange={this.handleInputChange}
               >
                 {Object.keys(INDUSTRY_OPTIONS).map((optKey) => (

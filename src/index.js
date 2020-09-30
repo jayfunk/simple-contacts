@@ -27,7 +27,11 @@ const store = configureStore({
     {
       id: 'account-1',
       name: 'Apple inc.',
-      address: 'Apple inc street address',
+      address: {
+        street: '999 Old St',
+        city: 'Atlanta',
+        state: 'GA'
+      },
       industry: INDUSTRY_UTILITIES,
       annualRevenue: 1000000000,
       rating: RATING_COLD,
@@ -45,7 +49,11 @@ const store = configureStore({
     {
       id: 'account-2',
       name: 'ABC Construction',
-      address: 'ABC Construction street address',
+      address: {
+        street: '999 Old St',
+        city: 'Atlanta',
+        state: 'GA'
+      },
       industry: INDUSTRY_MANUFACTURING,
       annualRevenue: 10,
       rating: RATING_HOT,
@@ -63,7 +71,11 @@ const store = configureStore({
     {
       id: 'account-3',
       name: 'Big Town Realty',
-      address: 'Big Town Realty street address',
+      address: {
+        street: '999 Old St',
+        city: 'Atlanta',
+        state: 'GA'
+      },
       industry: INDUSTRY_EDUCATION,
       annualRevenue: 941,
       rating: RATING_WARM,
