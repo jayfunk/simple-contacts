@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
+import {FormControl, InputGroup} from 'react-bootstrap';
 
 import {RATING_OPTIONS, INDUSTRY_OPTIONS} from './constants';
 
@@ -29,9 +30,14 @@ function renderAccounts(history, accounts) {
 export function Accounts(props) {
   return (
     <div className="accounts">
-      <Link className="btn btn-primary" to="/accounts/new">
-        Add Account
-      </Link>
+      <InputGroup className="mb-3">
+        <FormControl placeholder="Filter" />
+        <InputGroup.Append>
+          <Link className="btn btn-primary" to="/accounts/new">
+            Add Account
+          </Link>
+        </InputGroup.Append>
+      </InputGroup>
       <table className="table">
         <thead className="thead-dark">
           <tr>
