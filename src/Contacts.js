@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {withRouter, Link} from 'react-router-dom';
+import {withRouter, Link, Switch, Route, Redirect} from 'react-router-dom';
 
-import {removeContact} from './actions/accounts';
+import {removeContact, addContact, updateContact} from './actions/accounts';
 import {LEAD_SOURCE_OPTIONS} from './constants';
+import ContactModal from './ContactModal';
 
 function renderContacts(history, accountId, contacts, removeContact) {
   return contacts.map((contact) => {
@@ -70,7 +71,7 @@ function renderContacts(history, accountId, contacts, removeContact) {
 export function Contacts(props) {
   return (
     <div className="col contacts">
-      <Link className="btn btn-primary" to="/contacts/new">
+      <Link className="btn btn-primary" to={`${props.match.url}/contacts/new`}>
         Add Contact
       </Link>
       <table className="table">
@@ -88,6 +89,40 @@ export function Contacts(props) {
           {renderContacts(props.history, props.accountId, props.contacts, props.removeContact)}
         </tbody>
       </table>
+      <Switch>
+        <Route path={`${props.match.path}/contacts/new`}>
+          <ContactModal
+            accountId={props.accountId}
+            contact={null}
+            match={props.match}
+            history={props.history}
+            addContact={props.addContact}
+            updateContact={props.updateContact}
+          />
+        </Route>
+        <Route
+          path={`${props.match.path}/contacts/:contactId`}
+          render={({match}) => {
+            const contactId = match.params.contactId;
+            const contact = props.contacts.find((contact) => contact.id === contactId);
+
+            if (!contact) {
+              return <Redirect to={props.match.path} />;
+            }
+
+            return (
+              <ContactModal
+                accountId={props.accountId}
+                contact={contact}
+                match={props.match}
+                history={props.history}
+                addContact={props.addContact}
+                updateContact={props.updateContact}
+              />
+            );
+          }}
+        />
+      </Switch>
     </div>
   );
 }
@@ -96,11 +131,14 @@ Contacts.propTypes = {
   accountId: PropTypes.string.isRequired,
   contacts: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
   removeContact: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {
-  removeContact
+  removeContact,
+  addContact,
+  updateContact
 };
 
 export default withRouter(

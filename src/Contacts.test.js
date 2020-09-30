@@ -19,6 +19,10 @@ it('should render a contact', () => {
         }
       ]}
       history={{}}
+      match={{
+        url: '',
+        path: ''
+      }}
       removeContact={() => {}}
     />
   );
@@ -41,6 +45,10 @@ it('should render a contacts lead source with display value', () => {
         }
       ]}
       history={{}}
+      match={{
+        url: '',
+        path: ''
+      }}
       removeContact={() => {}}
     />
   );
@@ -67,6 +75,10 @@ it('should navigate to a contact detail page when a contact row is clicked', () 
         }
       ]}
       history={historyMock}
+      match={{
+        url: '',
+        path: ''
+      }}
       removeContact={() => {}}
     />
   );
@@ -92,6 +104,10 @@ it('should delete a contact when the delete icon is clicked', () => {
         }
       ]}
       history={{}}
+      match={{
+        url: '',
+        path: ''
+      }}
       removeContact={removeContactMock}
     />
   );
