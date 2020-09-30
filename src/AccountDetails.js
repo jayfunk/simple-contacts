@@ -142,7 +142,7 @@ export class AccountDetails extends Component {
               <Form.Label>Annual Revenue</Form.Label>
               <Form.Control
                 name="annualRevenue"
-                type="text"
+                type="number"
                 disabled={disabled}
                 value={account.annualRevenue}
                 onChange={this.handleInputChange}

@@ -37,7 +37,7 @@ it('should render existing account', () => {
         name: 'Account Name',
         address: '102 my street austin, texas',
         industry: INDUSTRY_SHIPPING,
-        annualRevenue: '$1.2B',
+        annualRevenue: 100000000,
         rating: RATING_WARM,
         establishedDate: '2019-12-31',
         contacts: []
@@ -48,7 +48,7 @@ it('should render existing account', () => {
   expect(getFormControlValue(wrapper, 'name')).toEqual('Account Name');
   expect(getFormControlValue(wrapper, 'address')).toEqual('102 my street austin, texas');
   expect(getFormControlValue(wrapper, 'industry')).toEqual('shipping');
-  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual('$1.2B');
+  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual(100000000);
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_WARM);
   expect(getFormControlValue(wrapper, 'establishedDate')).toEqual('2019-12-31');
 });
@@ -64,7 +64,7 @@ it('should make the details uneditable when the account exists', () => {
         name: 'Account Name',
         address: '102 my street austin, texas',
         industry: INDUSTRY_SHIPPING,
-        annualRevenue: '$1.2B',
+        annualRevenue: 100000000,
         rating: RATING_WARM,
         establishedDate: '2019-12-31',
         contacts: []
@@ -125,7 +125,7 @@ it('should switch to edit mode when edit button is pressed', () => {
         name: 'Account Name',
         address: '102 my street austin, texas',
         industry: INDUSTRY_SHIPPING,
-        annualRevenue: '$1.2B',
+        annualRevenue: 100000000,
         rating: RATING_WARM,
         establishedDate: '2019-12-31',
         contacts: []
@@ -172,7 +172,7 @@ it('should update fields on user input', () => {
         name: 'Account Name',
         address: '102 my street austin, texas',
         industry: INDUSTRY_SHIPPING,
-        annualRevenue: '$1.2B',
+        annualRevenue: 100000000,
         rating: RATING_WARM,
         establishedDate: '2019-12-31',
         contacts: []
@@ -189,14 +189,14 @@ it('should update fields on user input', () => {
   changeFormControlValue(wrapper, 'name', 'Updated Name');
   changeFormControlValue(wrapper, 'address', 'New Address');
   changeFormControlValue(wrapper, 'industry', INDUSTRY_MEDIA);
-  changeFormControlValue(wrapper, 'annualRevenue', '$3');
+  changeFormControlValue(wrapper, 'annualRevenue', 100);
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
   changeFormControlValue(wrapper, 'establishedDate', '2011-01-13');
 
   expect(getFormControlValue(wrapper, 'name')).toEqual('Updated Name');
   expect(getFormControlValue(wrapper, 'address')).toEqual('New Address');
   expect(getFormControlValue(wrapper, 'industry')).toEqual(INDUSTRY_MEDIA);
-  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual('$3');
+  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual(100);
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_COLD);
   expect(getFormControlValue(wrapper, 'establishedDate')).toEqual('2011-01-13');
 });
@@ -212,7 +212,7 @@ it('should change back to disabled mode and reset changed fields when cancel is 
         name: 'Account Name',
         address: '102 my street austin, texas',
         industry: INDUSTRY_SHIPPING,
-        annualRevenue: '$1.2B',
+        annualRevenue: 100000000,
         rating: RATING_WARM,
         establishedDate: '2019-12-31',
         contacts: []
@@ -229,7 +229,7 @@ it('should change back to disabled mode and reset changed fields when cancel is 
   changeFormControlValue(wrapper, 'name', 'Updated Name');
   changeFormControlValue(wrapper, 'address', 'New Address');
   changeFormControlValue(wrapper, 'industry', INDUSTRY_MEDIA);
-  changeFormControlValue(wrapper, 'annualRevenue', '$3');
+  changeFormControlValue(wrapper, 'annualRevenue', 100);
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
   changeFormControlValue(wrapper, 'establishedDate', '2011-01-13');
 
@@ -242,7 +242,7 @@ it('should change back to disabled mode and reset changed fields when cancel is 
   expect(getFormControlValue(wrapper, 'name')).toEqual('Account Name');
   expect(getFormControlValue(wrapper, 'address')).toEqual('102 my street austin, texas');
   expect(getFormControlValue(wrapper, 'industry')).toEqual('shipping');
-  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual('$1.2B');
+  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual(100000000);
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_WARM);
   expect(getFormControlValue(wrapper, 'establishedDate')).toEqual('2019-12-31');
 
@@ -300,7 +300,7 @@ it('should call createAccount action creator when save is pressed and account is
   changeFormControlValue(wrapper, 'name', 'Updated Name');
   changeFormControlValue(wrapper, 'address', 'New Address');
   changeFormControlValue(wrapper, 'industry', INDUSTRY_MEDIA);
-  changeFormControlValue(wrapper, 'annualRevenue', '$3');
+  changeFormControlValue(wrapper, 'annualRevenue', 100);
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
   changeFormControlValue(wrapper, 'establishedDate', '2011-01-13');
 
@@ -314,7 +314,7 @@ it('should call createAccount action creator when save is pressed and account is
     name: 'Updated Name',
     address: 'New Address',
     industry: INDUSTRY_MEDIA,
-    annualRevenue: '$3',
+    annualRevenue: 100,
     rating: RATING_COLD,
     establishedDate: '2011-01-13'
   });
@@ -335,7 +335,7 @@ it('should call updateAccount action creator when save is pressed and account is
         name: 'Account Name',
         address: '102 my street austin, texas',
         industry: INDUSTRY_SHIPPING,
-        annualRevenue: '$1.2B',
+        annualRevenue: 100000000,
         rating: RATING_WARM,
         establishedDate: '2019-12-31',
         contacts: []
@@ -352,14 +352,14 @@ it('should call updateAccount action creator when save is pressed and account is
   changeFormControlValue(wrapper, 'name', 'Updated Name');
   changeFormControlValue(wrapper, 'address', 'New Address');
   changeFormControlValue(wrapper, 'industry', INDUSTRY_MEDIA);
-  changeFormControlValue(wrapper, 'annualRevenue', '$3');
+  changeFormControlValue(wrapper, 'annualRevenue', 100);
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
   changeFormControlValue(wrapper, 'establishedDate', '2011-01-13');
 
   expect(getFormControlValue(wrapper, 'name')).toEqual('Updated Name');
   expect(getFormControlValue(wrapper, 'address')).toEqual('New Address');
   expect(getFormControlValue(wrapper, 'industry')).toEqual(INDUSTRY_MEDIA);
-  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual('$3');
+  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual(100);
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_COLD);
   expect(getFormControlValue(wrapper, 'establishedDate')).toEqual('2011-01-13');
 
@@ -373,7 +373,7 @@ it('should call updateAccount action creator when save is pressed and account is
     name: 'Updated Name',
     address: 'New Address',
     industry: INDUSTRY_MEDIA,
-    annualRevenue: '$3',
+    annualRevenue: 100,
     rating: RATING_COLD,
     establishedDate: '2011-01-13'
   });
