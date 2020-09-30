@@ -13,7 +13,7 @@ it('should render an account', () => {
     industry: INDUSTRY_AGRICULTURE,
     annualRevenue: '$1.2B',
     rating: RATING_HOT,
-    establishedDate: new Date().toDateString()
+    establishedDate: '2019-12-31'
   };
 
   const wrapper = shallow(<Accounts accounts={[account]} history={{}} />);
@@ -43,7 +43,7 @@ it('should navigate to an account detail page when an account row is clicked', (
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: '$1.2B',
           rating: RATING_HOT,
-          establishedDate: new Date().toDateString()
+          establishedDate: '2012-01-22'
         }
       ]}
       history={historyMock}

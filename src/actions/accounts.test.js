@@ -9,7 +9,6 @@ import {
 import * as constants from '../constants';
 
 test('createAccount creates an account payload with a generated id', () => {
-  const estDate = new Date().toDateString();
   expect(
     createAccount({
       name: 'New Account',
@@ -17,7 +16,7 @@ test('createAccount creates an account payload with a generated id', () => {
       industry: 'Agriculture',
       annualRevenue: '$1.2B',
       rating: constants.RATING_HOT,
-      establishedDate: new Date().toDateString()
+      establishedDate: '2012-12-31'
     })
   ).toEqual({
     type: createAccount.type,
@@ -28,7 +27,7 @@ test('createAccount creates an account payload with a generated id', () => {
       industry: 'Agriculture',
       annualRevenue: '$1.2B',
       rating: constants.RATING_HOT,
-      establishedDate: estDate
+      establishedDate: '2012-12-31'
     }
   });
 });
