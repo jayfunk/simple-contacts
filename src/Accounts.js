@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
 import {Form, Col, Row, Jumbotron, Table, InputGroup} from 'react-bootstrap';
 
-import {RATING_OPTIONS, INDUSTRY_OPTIONS} from './constants';
+import {RATING_OPTIONS, INDUSTRY_OPTIONS, STATE_OPTIONS} from './constants';
 
 import './Accounts.css';
 
@@ -15,6 +15,7 @@ export class Accounts extends Component {
       name: '',
       industry: '',
       rating: '',
+      state: '',
       annualRevenue: {
         greaterAnnualRevenue: '',
         lessAnnualRevenue: ''
@@ -79,6 +80,10 @@ export class Accounts extends Component {
 
     if (!filter) {
       return true;
+    }
+
+    if (fieldKey === 'state') {
+      return account.address.state === filter;
     }
 
     return account[fieldKey] === filter;
@@ -154,10 +159,16 @@ export class Accounts extends Component {
               <Form.Control
                 size="sm"
                 name="state"
-                type="text"
+                as="select"
                 value={this.state.state}
-                onChange={this.handleFilterChange}
-              />
+                onChange={this.handleOneDimensionalFilter}
+              >
+                {Object.keys(INDUSTRY_OPTIONS).map((optKey) => (
+                  <option key={optKey} value={optKey}>
+                    {INDUSTRY_OPTIONS[optKey]}
+                  </option>
+                ))}
+              </Form.Control>
             </Col>
           </Form.Group>
           <Form.Group as={Row} controlId="industry">
@@ -263,11 +274,16 @@ export class Accounts extends Component {
     );
   }
 
+  renderAccountAddress(address) {
+    return `${address.street} ${address.city}, ${STATE_OPTIONS[address.state]}`;
+  }
+
   renderAccounts() {
     return this.props.accounts
       .filter(this.filterByName)
       .filter(this.filterBySelectOption.bind(this, 'industry'))
       .filter(this.filterBySelectOption.bind(this, 'rating'))
+      .filter(this.filterBySelectOption.bind(this, 'state'))
       .filter(this.filterByGreaterAnnualRevenue)
       .filter(this.filterByLessAnnualRevenue)
       .filter(this.filterByAfterEstablishedDate)
@@ -281,7 +297,7 @@ export class Accounts extends Component {
             }}
           >
             <td>{account.name}</td>
-            <td>{account.address}</td>
+            <td>{this.renderAccountAddress(account.address)}</td>
             <td>{INDUSTRY_OPTIONS[account.industry]}</td>
             <td>{account.annualRevenue}</td>
             <td>{RATING_OPTIONS[account.rating]}</td>

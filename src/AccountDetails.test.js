@@ -223,7 +223,7 @@ it('should update fields on user input', () => {
   expect(getFormControlValue(wrapper, 'establishedDate')).toEqual('2011-01-13');
 });
 
-it.only('should change back to disabled mode and reset changed fields when cancel is pressed', () => {
+it('should change back to disabled mode and reset changed fields when cancel is pressed', () => {
   const wrapper = shallow(
     <AccountDetails
       createAccount={() => {}}

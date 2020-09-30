@@ -4,7 +4,13 @@ import {Form, Button, Col, Jumbotron} from 'react-bootstrap';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 
-import {INDUSTRY_OPTIONS, RATING_OPTIONS, INDUSTRY_AGRICULTURE, RATING_HOT} from './constants';
+import {
+  INDUSTRY_OPTIONS,
+  RATING_OPTIONS,
+  INDUSTRY_AGRICULTURE,
+  RATING_HOT,
+  STATE_OPTIONS
+} from './constants';
 import {createAccount, updateAccount, removeAccount} from './actions/accounts';
 
 const REQUIRED_FIELDS = [
@@ -32,7 +38,7 @@ export class AccountDetails extends Component {
             name: '',
             street: '',
             city: '',
-            state: '',
+            state: 'AL',
             industry: INDUSTRY_AGRICULTURE,
             annualRevenue: '',
             rating: RATING_HOT,
@@ -262,9 +268,9 @@ export class AccountDetails extends Component {
                 value={account.state}
                 onChange={this.handleInputChange}
               >
-                {Object.keys(INDUSTRY_OPTIONS).map((optKey) => (
+                {Object.keys(STATE_OPTIONS).map((optKey) => (
                   <option key={optKey} value={optKey}>
-                    {INDUSTRY_OPTIONS[optKey]}
+                    {STATE_OPTIONS[optKey]}
                   </option>
                 ))}
               </Form.Control>

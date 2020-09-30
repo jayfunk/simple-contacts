@@ -17,7 +17,11 @@ it('should render an account', () => {
   const account = {
     id: nanoid(),
     name: 'New Account',
-    address: '102 my street austin, texas',
+    address: {
+      street: '999 Old St',
+      city: 'Atlanta',
+      state: 'GA'
+    },
     industry: INDUSTRY_AGRICULTURE,
     annualRevenue: 1000,
     rating: RATING_HOT,
@@ -28,7 +32,7 @@ it('should render an account', () => {
 
   expect(wrapper.find('tbody tr')).toExist();
   expect(wrapper.find('tbody tr td').at(0)).toIncludeText('New Account');
-  expect(wrapper.find('tbody tr td').at(1)).toIncludeText('102 my street austin, texas');
+  expect(wrapper.find('tbody tr td').at(1)).toIncludeText('999 Old St Atlanta, Georgia');
   expect(wrapper.find('tbody tr td').at(2)).toIncludeText('Agriculture');
   expect(wrapper.find('tbody tr td').at(3)).toIncludeText(1000);
   expect(wrapper.find('tbody tr td').at(4)).toIncludeText('Hot');
@@ -47,7 +51,11 @@ it('should navigate to an account detail page when an account row is clicked', (
         {
           id: accountId,
           name: 'New Account',
-          address: '102 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: 1000,
           rating: RATING_HOT,
@@ -70,7 +78,11 @@ it('should filter by name', () => {
         {
           id: nanoid(),
           name: 'Account 1',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -79,7 +91,11 @@ it('should filter by name', () => {
         {
           id: nanoid(),
           name: 'Account 2',
-          address: '102 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: 100000,
           rating: RATING_HOT,
@@ -101,16 +117,18 @@ it('should filter by name', () => {
   ).toEqual('Account 2');
 });
 
-it('should filter by address', () => {});
-
-it('should filter by industry', () => {
+it('should filter by address', () => {
   const wrapper = shallow(
     <Accounts
       accounts={[
         {
           id: nanoid(),
           name: 'Account 1',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -119,7 +137,63 @@ it('should filter by industry', () => {
         {
           id: nanoid(),
           name: 'Account 2',
-          address: '102 my street austin, texas',
+          address: {
+            street: '1 Congress Ave',
+            city: 'Austin',
+            state: 'TX'
+          },
+          industry: INDUSTRY_AGRICULTURE,
+          annualRevenue: 100000,
+          rating: RATING_HOT,
+          establishedDate: '2012-01-22'
+        }
+      ]}
+      history={{}}
+    />
+  );
+
+  changeFormControlValue(wrapper, 'state', 'TX');
+
+  expect(wrapper.find('tbody').children().length).toEqual(1);
+  expect(
+    wrapper
+      .find('tbody tr td')
+      .first()
+      .text()
+  ).toEqual('Account 2');
+  expect(
+    wrapper
+      .find('tbody tr td')
+      .at(1)
+      .text()
+  ).toEqual('1 Congress Ave Austin, Texas');
+});
+
+it('should filter by industry', () => {
+  const wrapper = shallow(
+    <Accounts
+      accounts={[
+        {
+          id: nanoid(),
+          name: 'Account 1',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
+          industry: INDUSTRY_MEDIA,
+          annualRevenue: 1000,
+          rating: RATING_WARM,
+          establishedDate: '2010-04-14'
+        },
+        {
+          id: nanoid(),
+          name: 'Account 2',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: 100000,
           rating: RATING_HOT,
@@ -154,7 +228,11 @@ it('should filter by annualRevenue when greater than', () => {
         {
           id: nanoid(),
           name: 'Account 1',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -163,7 +241,11 @@ it('should filter by annualRevenue when greater than', () => {
         {
           id: nanoid(),
           name: 'Account 2',
-          address: '102 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: 100000,
           rating: RATING_HOT,
@@ -199,7 +281,11 @@ it('should filter by annualRevenue when less than', () => {
         {
           id: nanoid(),
           name: 'Account 1',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -208,7 +294,11 @@ it('should filter by annualRevenue when less than', () => {
         {
           id: nanoid(),
           name: 'Account 2',
-          address: '102 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: 100000,
           rating: RATING_HOT,
@@ -244,7 +334,11 @@ it('should filter by annualRevenue when greater than and less than', () => {
         {
           id: nanoid(),
           name: 'Account 1',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 10,
           rating: RATING_WARM,
@@ -253,7 +347,11 @@ it('should filter by annualRevenue when greater than and less than', () => {
         {
           id: nanoid(),
           name: 'Account 2',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -262,7 +360,11 @@ it('should filter by annualRevenue when greater than and less than', () => {
         {
           id: nanoid(),
           name: 'Account 3',
-          address: '102 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: 100000,
           rating: RATING_HOT,
@@ -299,7 +401,11 @@ it('should filter by rating', () => {
         {
           id: nanoid(),
           name: 'Account 1',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -308,7 +414,11 @@ it('should filter by rating', () => {
         {
           id: nanoid(),
           name: 'Account 2',
-          address: '102 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: 100000,
           rating: RATING_HOT,
@@ -343,7 +453,11 @@ it('should filter by establishedDate when after', () => {
         {
           id: nanoid(),
           name: 'Account 1',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -352,7 +466,11 @@ it('should filter by establishedDate when after', () => {
         {
           id: nanoid(),
           name: 'Account 2',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -361,7 +479,11 @@ it('should filter by establishedDate when after', () => {
         {
           id: nanoid(),
           name: 'Account 3',
-          address: '102 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: 100000,
           rating: RATING_HOT,
@@ -397,7 +519,11 @@ it('should filter by establishedDate when before', () => {
         {
           id: nanoid(),
           name: 'Account 1',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -406,7 +532,11 @@ it('should filter by establishedDate when before', () => {
         {
           id: nanoid(),
           name: 'Account 2',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -415,7 +545,11 @@ it('should filter by establishedDate when before', () => {
         {
           id: nanoid(),
           name: 'Account 3',
-          address: '102 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: 100000,
           rating: RATING_HOT,
@@ -451,7 +585,11 @@ it('should filter by establishedDate when before and after', () => {
         {
           id: nanoid(),
           name: 'Account 1',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -460,7 +598,11 @@ it('should filter by establishedDate when before and after', () => {
         {
           id: nanoid(),
           name: 'Account 2',
-          address: '100 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_MEDIA,
           annualRevenue: 1000,
           rating: RATING_WARM,
@@ -469,7 +611,11 @@ it('should filter by establishedDate when before and after', () => {
         {
           id: nanoid(),
           name: 'Account 3',
-          address: '102 my street austin, texas',
+          address: {
+            street: '999 Old St',
+            city: 'Atlanta',
+            state: 'GA'
+          },
           industry: INDUSTRY_AGRICULTURE,
           annualRevenue: 100000,
           rating: RATING_HOT,
