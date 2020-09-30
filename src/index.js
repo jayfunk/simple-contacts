@@ -28,9 +28,9 @@ const store = configureStore({
       id: 'account-1',
       name: 'Apple inc.',
       address: {
-        street: '999 Old St',
-        city: 'Atlanta',
-        state: 'GA'
+        street: '123 Lake St',
+        city: 'Austin',
+        state: 'TX'
       },
       industry: INDUSTRY_UTILITIES,
       annualRevenue: 1000000000,
@@ -73,8 +73,8 @@ const store = configureStore({
       name: 'Big Town Realty',
       address: {
         street: '999 Old St',
-        city: 'Atlanta',
-        state: 'GA'
+        city: 'Portland',
+        state: 'OR'
       },
       industry: INDUSTRY_EDUCATION,
       annualRevenue: 941,
