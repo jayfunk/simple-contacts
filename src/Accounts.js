@@ -132,27 +132,41 @@ export class Accounts extends Component {
       <Jumbotron>
         <h4>Filter Accounts</h4>
         <Form>
-          <Form.Row>
-            <Form.Group as={Col} controlId="name">
+          <Form.Group as={Row} controlId="name">
+            <Form.Label column sm={2}>
+              Name
+            </Form.Label>
+            <Col>
               <Form.Control
+                size="sm"
                 name="name"
                 type="text"
-                placeholder="Name"
                 value={this.state.name}
                 onChange={this.handleOneDimensionalFilter}
               />
-            </Form.Group>
-            <Form.Group as={Col} controlId="state">
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="state">
+            <Form.Label column sm={2}>
+              State
+            </Form.Label>
+            <Col>
               <Form.Control
-                placeholder="State"
+                size="sm"
                 name="state"
                 type="text"
                 value={this.state.state}
                 onChange={this.handleFilterChange}
               />
-            </Form.Group>
-            <Form.Group as={Col} controlId="industry">
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="industry">
+            <Form.Label column sm={2}>
+              Industry
+            </Form.Label>
+            <Col>
               <Form.Control
+                size="sm"
                 name="industry"
                 value={this.state.industry}
                 as="select"
@@ -164,12 +178,14 @@ export class Accounts extends Component {
                   </option>
                 ))}
               </Form.Control>
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} controlId="annualRevenue">
-              <Form.Label column>Annual Revenue</Form.Label>
-              <InputGroup className="mb-3">
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="annualRevenue">
+            <Form.Label column sm={2}>
+              Annual Revenue
+            </Form.Label>
+            <Col>
+              <InputGroup size="sm" className="mb-3">
                 <InputGroup.Prepend>
                   <InputGroup.Text id="basic-addon1">Less Than</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -180,7 +196,7 @@ export class Accounts extends Component {
                   onChange={this.handleRevenueChange}
                 />
               </InputGroup>
-              <InputGroup className="mb-3">
+              <InputGroup size="sm" className="mb-3">
                 <InputGroup.Prepend>
                   <InputGroup.Text id="basic-addon1">Greater Than</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -191,12 +207,15 @@ export class Accounts extends Component {
                   onChange={this.handleRevenueChange}
                 />
               </InputGroup>
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} controlId="rating">
-              <Form.Label>Rating</Form.Label>
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="rating">
+            <Form.Label column sm={2}>
+              Rating
+            </Form.Label>
+            <Col>
               <Form.Control
+                size="sm"
                 name="rating"
                 value={this.state.rating}
                 as="select"
@@ -208,14 +227,14 @@ export class Accounts extends Component {
                   </option>
                 ))}
               </Form.Control>
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} controlId="industry">
-              <Form.Label column sm={2}>
-                Industry
-              </Form.Label>
-              <InputGroup className="mb-3">
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="industry">
+            <Form.Label column sm={2}>
+              Industry
+            </Form.Label>
+            <Col>
+              <InputGroup size="sm" className="mb-3">
                 <InputGroup.Prepend>
                   <InputGroup.Text id="basic-addon1">After</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -226,7 +245,7 @@ export class Accounts extends Component {
                   onChange={this.handleEstablishedDateChange}
                 />
               </InputGroup>
-              <InputGroup className="mb-3">
+              <InputGroup size="sm" className="mb-3">
                 <InputGroup.Prepend>
                   <InputGroup.Text id="basic-addon1">Before</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -237,8 +256,8 @@ export class Accounts extends Component {
                   onChange={this.handleEstablishedDateChange}
                 />
               </InputGroup>
-            </Form.Group>
-          </Form.Row>
+            </Col>
+          </Form.Group>
         </Form>
       </Jumbotron>
     );
