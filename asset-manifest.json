@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/simple-contacts/static/css/main.91699584.chunk.css",
+    "main.js": "/simple-contacts/static/js/main.35c17444.chunk.js",
+    "main.js.map": "/simple-contacts/static/js/main.35c17444.chunk.js.map",
+    "runtime-main.js": "/simple-contacts/static/js/runtime-main.e87ff679.js",
+    "runtime-main.js.map": "/simple-contacts/static/js/runtime-main.e87ff679.js.map",
+    "static/css/2.d9ad5f5c.chunk.css": "/simple-contacts/static/css/2.d9ad5f5c.chunk.css",
+    "static/js/2.e4ad3fc3.chunk.js": "/simple-contacts/static/js/2.e4ad3fc3.chunk.js",
+    "static/js/2.e4ad3fc3.chunk.js.map": "/simple-contacts/static/js/2.e4ad3fc3.chunk.js.map",
+    "index.html": "/simple-contacts/index.html",
+    "precache-manifest.cb6cd0b269e8f521d0804ac065391b91.js": "/simple-contacts/precache-manifest.cb6cd0b269e8f521d0804ac065391b91.js",
+    "service-worker.js": "/simple-contacts/service-worker.js",
+    "static/css/2.d9ad5f5c.chunk.css.map": "/simple-contacts/static/css/2.d9ad5f5c.chunk.css.map",
+    "static/css/main.91699584.chunk.css.map": "/simple-contacts/static/css/main.91699584.chunk.css.map",
+    "static/js/2.e4ad3fc3.chunk.js.LICENSE.txt": "/simple-contacts/static/js/2.e4ad3fc3.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e87ff679.js",
+    "static/css/2.d9ad5f5c.chunk.css",
+    "static/js/2.e4ad3fc3.chunk.js",
+    "static/css/main.91699584.chunk.css",
+    "static/js/main.35c17444.chunk.js"
+  ]
+}
