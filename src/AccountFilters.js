@@ -80,11 +80,9 @@ class AccountFilters extends Component {
       <Jumbotron className="col">
         <h4>Filter Accounts</h4>
         <Form>
-          <Form.Group as={Row} controlId="name">
-            <Form.Label column sm={2}>
-              Name
-            </Form.Label>
-            <Col>
+          <Form.Row>
+            <Form.Group as={Col} controlId="name">
+              <Form.Label>Name</Form.Label>
               <Form.Control
                 size="sm"
                 name="name"
@@ -92,13 +90,9 @@ class AccountFilters extends Component {
                 value={this.state.name}
                 onChange={this.handleOneDimensionalFilter}
               />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} controlId="state">
-            <Form.Label column sm={2}>
-              State
-            </Form.Label>
-            <Col>
+            </Form.Group>
+            <Form.Group as={Col} controlId="state">
+              <Form.Label>State</Form.Label>
               <Form.Control
                 size="sm"
                 name="state"
@@ -108,13 +102,23 @@ class AccountFilters extends Component {
               >
                 {this.renderSelectOptions(STATE_OPTIONS)}
               </Form.Control>
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} controlId="industry">
-            <Form.Label column sm={2}>
-              Industry
-            </Form.Label>
-            <Col>
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} controlId="rating">
+              <Form.Label>Rating</Form.Label>
+              <Form.Control
+                size="sm"
+                name="rating"
+                value={this.state.rating}
+                as="select"
+                onChange={this.handleOneDimensionalFilter}
+              >
+                {this.renderSelectOptions(RATING_OPTIONS)}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group as={Col} controlId="industry">
+              <Form.Label>Industry</Form.Label>
               <Form.Control
                 size="sm"
                 name="industry"
@@ -124,8 +128,8 @@ class AccountFilters extends Component {
               >
                 {this.renderSelectOptions(INDUSTRY_OPTIONS)}
               </Form.Control>
-            </Col>
-          </Form.Group>
+            </Form.Group>
+          </Form.Row>
           <Form.Group as={Row} controlId="annualRevenue">
             <Form.Label column sm={2}>
               Annual Revenue
@@ -153,22 +157,6 @@ class AccountFilters extends Component {
                   onChange={this.handleRevenueChange}
                 />
               </InputGroup>
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} controlId="rating">
-            <Form.Label column sm={2}>
-              Rating
-            </Form.Label>
-            <Col>
-              <Form.Control
-                size="sm"
-                name="rating"
-                value={this.state.rating}
-                as="select"
-                onChange={this.handleOneDimensionalFilter}
-              >
-                {this.renderSelectOptions(RATING_OPTIONS)}
-              </Form.Control>
             </Col>
           </Form.Group>
           <Form.Group as={Row} controlId="industry">
