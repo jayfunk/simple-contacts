@@ -77,7 +77,7 @@ class AccountFilters extends Component {
 
   render() {
     return (
-      <Jumbotron>
+      <Jumbotron className="col">
         <h4>Filter Accounts</h4>
         <Form>
           <Form.Group as={Row} controlId="name">

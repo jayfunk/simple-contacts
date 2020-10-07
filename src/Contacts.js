@@ -138,7 +138,9 @@ Contacts.propTypes = {
   contacts: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-  removeContact: PropTypes.func.isRequired
+  removeContact: PropTypes.func.isRequired,
+  addContact: PropTypes.func.isRequired,
+  updateContact: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {

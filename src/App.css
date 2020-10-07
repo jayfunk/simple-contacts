@@ -1,7 +1,51 @@
-.App {
+.app {
   text-align: center;
 }
 
-.App tbody > tr {
+.app .btn {
+  font-size: 1em;
+}
+
+.app .accounts {
+}
+
+.app .accounts .row {
+  padding: 0.75rem;
+}
+
+.app .accounts .header {
+  cursor: default;
+  background-color: #343a40;
+  color: white;
+}
+
+.app .accounts .row {
+  text-align: center;
+}
+
+.app .accounts .account {
   cursor: pointer;
+  border-top: 1px solid #dee2e6;
+  position: relative;
+}
+
+.app .accounts .account .expander.btn.focus,
+.app .accounts .account .expander.btn:focus {
+  box-shadow: none;
+}
+
+.app .accounts .account:hover {
+  background-color: #e9ecef;
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: 0.75rem;
+  }
+
+  .app .accounts .header > [class*='col-'],
+  .app .accounts .account > [class*='col-'] {
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
