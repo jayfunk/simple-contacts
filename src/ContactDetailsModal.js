@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {Modal, Button, Form} from 'react-bootstrap';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {isValidPhoneNumber} from 'react-phone-number-input';
+import PhoneInput from 'react-phone-number-input/input';
 
 import {LEAD_SOURCE_WEB, LEAD_SOURCE_OPTIONS} from './constants';
 import {updateContact, addContact} from './actions/accounts';
@@ -32,6 +34,7 @@ class ContactDetailsModal extends Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handlePhoneInputChange = this.handlePhoneInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isValidInput = this.isValidInput.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -45,6 +48,15 @@ class ContactDetailsModal extends Component {
       contact: {
         ...this.state.contact,
         [name]: target.value
+      }
+    });
+  }
+
+  handlePhoneInputChange(value) {
+    this.setState({
+      contact: {
+        ...this.state.contact,
+        phone: value
       }
     });
   }
@@ -74,6 +86,9 @@ class ContactDetailsModal extends Component {
       const fieldValue = contact[key];
       if (key === 'email') {
         return EMAIL_REGEX.test(fieldValue);
+      }
+      if (key === 'phone') {
+        return isValidPhoneNumber(fieldValue);
       }
       if (typeof fieldValue === 'string') {
         return fieldValue.trim() !== '';
@@ -113,12 +128,13 @@ class ContactDetailsModal extends Component {
               </Form.Group>
               <Form.Group controlId="phone">
                 <Form.Label>Phone</Form.Label>
-                <Form.Control
-                  name="phone"
-                  type="text"
+                <PhoneInput
+                  country="US"
+                  inputComponent={Form.Control}
                   required
+                  pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                   value={contact.phone}
-                  onChange={this.handleInputChange}
+                  onChange={this.handlePhoneInputChange}
                 />
               </Form.Group>
             </Form.Row>

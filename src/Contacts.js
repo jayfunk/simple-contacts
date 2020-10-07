@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import {formatPhoneNumber} from 'react-phone-number-input';
 
 import {removeContact, addContact, updateContact} from './actions/accounts';
 import {LEAD_SOURCE_OPTIONS} from './constants';
@@ -14,7 +15,7 @@ function renderContacts(history, accountId, contacts, removeContact) {
     return (
       <div key={contact.id} className="row">
         <div className="col-6 col-sm-6 col-lg-2">{contact.name}</div>
-        <div className="col-6 col-sm-6 col-lg-3">{contact.phone}</div>
+        <div className="col-6 col-sm-6 col-lg-3">{formatPhoneNumber(contact.phone)}</div>
         <div className="col-6 col-sm-6 col-lg-3">{contact.email}</div>
         <div className="col-6 col-sm-6 col-lg-2">{LEAD_SOURCE_OPTIONS[contact.leadSource]}</div>
         <div className="col-12 col-lg-2">

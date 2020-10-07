@@ -40,7 +40,7 @@ const store = configureStore({
         {
           id: 'contact-1',
           name: 'New Contact',
-          phone: '55555555555',
+          phone: '+15555555555',
           email: 'contact1@contacts.com',
           leadSource: LEAD_SOURCE_PHONE
         }
@@ -62,7 +62,7 @@ const store = configureStore({
         {
           id: 'contact-2',
           name: 'New Contact',
-          phone: '55555555555',
+          phone: '+15555555555',
           email: 'contact1@contacts.com',
           leadSource: LEAD_SOURCE_PHONE
         }
@@ -84,7 +84,7 @@ const store = configureStore({
         {
           id: 'contact-3',
           name: 'New Contact',
-          phone: '55555555555',
+          phone: '+15555555555',
           email: 'contact1@contacts.com',
           leadSource: LEAD_SOURCE_PHONE
         }
