@@ -22,7 +22,7 @@ function renderContacts(history, accountId, contacts, removeContact) {
             variant="info"
             size="sm"
             onClick={() => {
-              history.push(`/accounts/${accountId}/contacts/${contact.id}`);
+              history.push(`/contacts/${contact.id}`);
             }}
           >
             <svg
@@ -74,7 +74,7 @@ export function Contacts(props) {
   return (
     <React.Fragment>
       <div className="row">
-        <Link className="mb-3 btn btn-primary" to={`${props.match.url}/contacts/new`}>
+        <Link className="mb-3 btn btn-primary" to="/contacts/new">
           Add Contact
         </Link>
       </div>
@@ -96,20 +96,24 @@ export function Contacts(props) {
         </Table>
       </div>
       <Switch>
-        <Route path={`${props.match.path}/contacts/new`}>
-          <ContactDetailsModal
-            accountId={props.accountId}
-            contact={null}
-            match={props.match}
-            history={props.history}
-            addContact={props.addContact}
-            updateContact={props.updateContact}
-          />
-        </Route>
         <Route
-          path={`${props.match.path}/contacts/:contactId`}
+          path="/contacts/:contactId"
           render={({match}) => {
             const contactId = match.params.contactId;
+
+            if (contactId === 'new') {
+              return (
+                <ContactDetailsModal
+                  accountId={props.accountId}
+                  contact={null}
+                  match={props.match}
+                  history={props.history}
+                  addContact={props.addContact}
+                  updateContact={props.updateContact}
+                />
+              );
+            }
+
             const contact = props.contacts.find((contact) => contact.id === contactId);
 
             if (!contact) {
