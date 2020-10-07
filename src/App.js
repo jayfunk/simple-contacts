@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import {Switch, Route, Redirect, Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Link, withRouter} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 
 import {RATING_OPTIONS, INDUSTRY_OPTIONS, STATE_OPTIONS} from './constants';
 import filterAccounts from './filterAccounts';
 import AccountFilters from './AccountFilters';
 import AccountDetailsModal from './AccountDetailsModal';
+import ContactDetailsModal from './ContactDetailsModal';
 import Contacts from './Contacts';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -71,41 +71,59 @@ export class App extends Component {
           <div className="col-3 col-md-2" onClick={openModal}>
             {account.establishedDate.toString()}
           </div>
-          <Button
-            variant="link"
-            className="expander col-md-1"
-            onClick={this.toggleExpanded.bind(this, accountId)}
-          >
-            {expanded === false ? (
+          <div className="col-md-1">
+            <Link className="btn btn-link btn-sm" to={`/accounts/${accountId}/contacts/new`}>
               <svg
                 width="1em"
                 height="1em"
                 viewBox="0 0 16 16"
-                className="bi bi-chevron-left"
+                className="bi bi-plus"
                 fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   fillRule="evenodd"
-                  d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+                  d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
                 />
               </svg>
-            ) : (
-              <svg
-                width="1em"
-                height="1em"
-                viewBox="0 0 16 16"
-                className="bi bi-chevron-down"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-                />
-              </svg>
-            )}
-          </Button>
+            </Link>
+            <Button
+              variant="link"
+              size="sm"
+              className="expander col-md-1"
+              onClick={this.toggleExpanded.bind(this, accountId)}
+            >
+              {expanded === false ? (
+                <svg
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 16 16"
+                  className="bi bi-chevron-left"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 16 16"
+                  className="bi bi-chevron-down"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                  />
+                </svg>
+              )}
+            </Button>
+          </div>
           {expanded === true && <Contacts accountId={accountId} contacts={account.contacts} />}
         </div>
       );
@@ -139,6 +157,7 @@ export class App extends Component {
         </div>
         <Switch>
           <Route
+            exact
             path="/accounts/:accountId"
             render={({match}) => {
               const accountId = match.params.accountId;
@@ -154,6 +173,26 @@ export class App extends Component {
               }
 
               return <AccountDetailsModal account={account} />;
+            }}
+          />
+          <Route
+            path="/accounts/:accountId/contacts/:contactId"
+            render={({match}) => {
+              const contactId = match.params.contactId;
+              const accountId = match.params.accountId;
+
+              if (contactId === 'new') {
+                return <ContactDetailsModal accountId={accountId} contact={null} />;
+              }
+
+              const account = this.props.accounts.find((account) => account.id === accountId);
+              const contact = account.contacts.find((contact) => contact.id === contactId);
+
+              if (!contact) {
+                return <Redirect to="/" />;
+              }
+
+              return <ContactDetailsModal accountId={accountId} contact={contact} />;
             }}
           />
         </Switch>

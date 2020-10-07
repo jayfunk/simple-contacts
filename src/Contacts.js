@@ -1,28 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, Table} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {withRouter, Link, Switch, Route, Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 import {removeContact, addContact, updateContact} from './actions/accounts';
 import {LEAD_SOURCE_OPTIONS} from './constants';
-import ContactDetailsModal from './ContactDetailsModal';
+
+import './contacts.css';
 
 function renderContacts(history, accountId, contacts, removeContact) {
   return contacts.map((contact) => {
     return (
-      <tr key={contact.id}>
-        <td>{contact.name}</td>
-        <td>{contact.phone}</td>
-        <td>{contact.email}</td>
-        <td>{LEAD_SOURCE_OPTIONS[contact.leadSource]}</td>
-        <td>
+      <div key={contact.id} className="row">
+        <div className="col-6 col-sm-6 col-lg-2">{contact.name}</div>
+        <div className="col-6 col-sm-6 col-lg-3">{contact.phone}</div>
+        <div className="col-6 col-sm-6 col-lg-3">{contact.email}</div>
+        <div className="col-6 col-sm-6 col-lg-2">{LEAD_SOURCE_OPTIONS[contact.leadSource]}</div>
+        <div className="col-12 col-lg-2">
           <Button
-            className="edit"
+            className="edit mr-1"
             variant="info"
             size="sm"
             onClick={() => {
-              history.push(`/contacts/${contact.id}`);
+              history.push(`/accounts/${accountId}/contacts/${contact.id}`);
             }}
           >
             <svg
@@ -39,8 +40,6 @@ function renderContacts(history, accountId, contacts, removeContact) {
               />
             </svg>
           </Button>
-        </td>
-        <td>
           <Button
             className="delete"
             variant="danger"
@@ -64,76 +63,21 @@ function renderContacts(history, accountId, contacts, removeContact) {
               />
             </svg>
           </Button>
-        </td>
-      </tr>
+        </div>
+      </div>
     );
   });
 }
 
 export function Contacts(props) {
   return (
-    <React.Fragment>
+    <div className="contacts container ml-5">
       <div className="row">
-        <Link className="mb-3 btn btn-primary" to="/contacts/new">
-          Add Contact
-        </Link>
+        <div className="col">
+          {renderContacts(props.history, props.accountId, props.contacts, props.removeContact)}
+        </div>
       </div>
-      <div className="row">
-        <Table striped bordered hover>
-          <thead className="thead-dark">
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Email</th>
-              <th scope="col">Lead Source</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {renderContacts(props.history, props.accountId, props.contacts, props.removeContact)}
-          </tbody>
-        </Table>
-      </div>
-      <Switch>
-        <Route
-          path="/contacts/:contactId"
-          render={({match}) => {
-            const contactId = match.params.contactId;
-
-            if (contactId === 'new') {
-              return (
-                <ContactDetailsModal
-                  accountId={props.accountId}
-                  contact={null}
-                  match={props.match}
-                  history={props.history}
-                  addContact={props.addContact}
-                  updateContact={props.updateContact}
-                />
-              );
-            }
-
-            const contact = props.contacts.find((contact) => contact.id === contactId);
-
-            if (!contact) {
-              return <Redirect to={props.match.path} />;
-            }
-
-            return (
-              <ContactDetailsModal
-                accountId={props.accountId}
-                contact={contact}
-                match={props.match}
-                history={props.history}
-                addContact={props.addContact}
-                updateContact={props.updateContact}
-              />
-            );
-          }}
-        />
-      </Switch>
-    </React.Fragment>
+    </div>
   );
 }
 
