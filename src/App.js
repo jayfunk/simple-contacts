@@ -53,9 +53,27 @@ export class App extends Component {
 
       return (
         <div className="account row" key={accountId}>
+          <div className="col-6 col-md-2" onClick={openModal}>
+            {account.name}
+          </div>
+          <div className="col-6 col-md-2" onClick={openModal}>
+            {this.renderAccountAddress(account.address)}
+          </div>
+          <div className="col-3 col-md-2" onClick={openModal}>
+            {INDUSTRY_OPTIONS[account.industry]}
+          </div>
+          <div className="col-3 col-md-2" onClick={openModal}>
+            {account.annualRevenue}
+          </div>
+          <div className="col-2 col-md-1" onClick={openModal}>
+            {RATING_OPTIONS[account.rating]}
+          </div>
+          <div className="col-3 col-md-2" onClick={openModal}>
+            {account.establishedDate.toString()}
+          </div>
           <Button
             variant="link"
-            className="expander col-1 col-md-1"
+            className="expander col-md-1"
             onClick={this.toggleExpanded.bind(this, accountId)}
           >
             {expanded === false ? (
@@ -63,13 +81,13 @@ export class App extends Component {
                 width="1em"
                 height="1em"
                 viewBox="0 0 16 16"
-                className="bi bi-chevron-right"
+                className="bi bi-chevron-left"
                 fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   fillRule="evenodd"
-                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+                  d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
                 />
               </svg>
             ) : (
@@ -88,24 +106,6 @@ export class App extends Component {
               </svg>
             )}
           </Button>
-          <div className="col-6 col-md-2" onClick={openModal}>
-            <span>{account.name}</span>
-          </div>
-          <div className="col-6 col-md-2" onClick={openModal}>
-            {this.renderAccountAddress(account.address)}
-          </div>
-          <div className="col-3 col-md-2" onClick={openModal}>
-            {INDUSTRY_OPTIONS[account.industry]}
-          </div>
-          <div className="col-3 col-md-2" onClick={openModal}>
-            {account.annualRevenue}
-          </div>
-          <div className="col-2 col-md-1" onClick={openModal}>
-            {RATING_OPTIONS[account.rating]}
-          </div>
-          <div className="col-3 col-md-2" onClick={openModal}>
-            {account.establishedDate.toString()}
-          </div>
           {expanded === true && <Contacts accountId={accountId} contacts={account.contacts} />}
         </div>
       );
@@ -126,13 +126,13 @@ export class App extends Component {
         <div className="accounts row mb-5">
           <div className="col">
             <div className="header row">
-              <div className="col-1 col-md-1"></div>
               <div className="col-6 col-md-2">Name</div>
               <div className="col-6 col-md-2">Address</div>
               <div className="col-3 col-md-2">Industry</div>
               <div className="col-3 col-md-2">Revenue</div>
               <div className="col-2 col-md-1">Rating</div>
               <div className="col-3 col-md-2">Est. Date</div>
+              <div className="col-md-1"></div>
             </div>
             {this.renderAccounts()}
           </div>

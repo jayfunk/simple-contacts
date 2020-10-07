@@ -29,13 +29,13 @@
   position: relative;
 }
 
-.app .accounts .account .expander.btn.focus,
-.app .accounts .account .expander.btn:focus {
-  box-shadow: none;
-}
-
 .app .accounts .account:hover {
   background-color: #e9ecef;
+}
+
+.app .accounts .account .expander.focus,
+.app .accounts .account .expander:focus {
+  box-shadow: none;
 }
 
 @media (max-width: 576px) {
@@ -47,5 +47,19 @@
   .app .accounts .account > [class*='col-'] {
     padding-right: 0;
     padding-left: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .app .accounts .account .expander {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+
+  .app .accounts .account .expander:hover {
+    color: #fff;
+    background-color: #5a6268;
+    border-color: #545b62;
   }
 }
