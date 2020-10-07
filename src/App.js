@@ -3,7 +3,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import Accounts from './Accounts';
-import Account from './Account';
+import AccountDetailsModal from './AccountDetailsModal';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -11,17 +11,15 @@ import './App.css';
 function App(props) {
   return (
     <div className="App container">
+      <Accounts accounts={props.accounts} />
       <Switch>
-        <Route exact path="/">
-          <Accounts accounts={props.accounts} />
-        </Route>
         <Route
           path="/accounts/:accountId"
           render={({match}) => {
             const accountId = match.params.accountId;
 
             if (accountId === 'new') {
-              return <Account account={null} />;
+              return <AccountDetailsModal account={null} />;
             }
 
             const account = props.accounts.find((account) => account.id === accountId);
@@ -30,7 +28,7 @@ function App(props) {
               return <Redirect to="/" />;
             }
 
-            return <Account account={account} />;
+            return <AccountDetailsModal account={account} />;
           }}
         />
       </Switch>

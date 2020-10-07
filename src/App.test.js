@@ -6,7 +6,7 @@ import {MemoryRouter} from 'react-router-dom';
 
 import App from './App';
 import Accounts from './Accounts';
-import Account from './Account';
+import AccountDetailsModal from './AccountDetailsModal';
 
 const mockStore = configureStore([]);
 
@@ -65,7 +65,7 @@ it('should find and render the account when navigating to the account route', ()
     </MemoryRouter>
   );
 
-  expect(wrapper.find(Account)).toHaveProp('account', accounts[0]);
+  expect(wrapper.find(AccountDetailsModal)).toHaveProp('account', accounts[0]);
 });
 
 it('should render the account component with a null account if the account id is new', () => {
@@ -90,5 +90,5 @@ it('should render the account component with a null account if the account id is
     </MemoryRouter>
   );
 
-  expect(wrapper.find(Account)).toHaveProp('account', null);
+  expect(wrapper.find(AccountDetailsModal)).toHaveProp('account', null);
 });

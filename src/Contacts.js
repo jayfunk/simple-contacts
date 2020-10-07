@@ -6,7 +6,7 @@ import {withRouter, Link, Switch, Route, Redirect} from 'react-router-dom';
 
 import {removeContact, addContact, updateContact} from './actions/accounts';
 import {LEAD_SOURCE_OPTIONS} from './constants';
-import ContactModal from './ContactModal';
+import ContactDetailsModal from './ContactDetailsModal';
 
 function renderContacts(history, accountId, contacts, removeContact) {
   return contacts.map((contact) => {
@@ -97,7 +97,7 @@ export function Contacts(props) {
       </div>
       <Switch>
         <Route path={`${props.match.path}/contacts/new`}>
-          <ContactModal
+          <ContactDetailsModal
             accountId={props.accountId}
             contact={null}
             match={props.match}
@@ -117,7 +117,7 @@ export function Contacts(props) {
             }
 
             return (
-              <ContactModal
+              <ContactDetailsModal
                 accountId={props.accountId}
                 contact={contact}
                 match={props.match}
