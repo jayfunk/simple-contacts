@@ -72,7 +72,14 @@ export class App extends Component {
             {account.establishedDate.toString()}
           </div>
           <div className="col-md-1">
-            <Link className="btn btn-link btn-sm" to={`/accounts/${accountId}/contacts/new`}>
+            <Button
+              variant="link"
+              size="sm"
+              className="add-contact col-md-6 col-2"
+              onClick={() => {
+                this.props.history.push(`/accounts/${accountId}/contacts/new`);
+              }}
+            >
               <svg
                 width="1em"
                 height="1em"
@@ -86,11 +93,11 @@ export class App extends Component {
                   d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
                 />
               </svg>
-            </Link>
+            </Button>
             <Button
               variant="link"
               size="sm"
-              className="expander col-md-1"
+              className="expander col-md-6  col-10"
               onClick={this.toggleExpanded.bind(this, accountId)}
             >
               {expanded === false ? (
