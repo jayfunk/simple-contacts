@@ -38,7 +38,7 @@
 }
 
 @media (max-width: 576px) {
-  body {
+  html {
     font-size: 0.75rem;
   }
 
@@ -50,6 +50,10 @@
 }
 
 @media (max-width: 767px) {
+  .app .accounts .account .controls {
+    margin-top: 0.5rem;
+  }
+
   .app .accounts .account .controls > .btn {
     margin-right: 0.5rem;
     color: #212529;

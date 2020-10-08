@@ -22,7 +22,7 @@ function renderContacts(history, accountId, contacts, removeContact) {
         <div className="col-6 col-sm-6 col-lg-3">{formatPhoneNumber(contact.phone)}</div>
         <div className="col-6 col-sm-6 col-lg-3">{contact.email}</div>
         <div className="col-6 col-sm-6 col-lg-2">{LEAD_SOURCE_OPTIONS[contact.leadSource]}</div>
-        <div className="col-12 col-lg-2">
+        <div className="col-12 col-lg-2 controls">
           <Button
             className="delete"
             variant="link"
