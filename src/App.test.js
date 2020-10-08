@@ -125,8 +125,8 @@ it('should navigate to an account detail page when an account row is clicked', (
   );
 
   wrapper
-    .find('.accounts .account > div')
-    .at(0)
+    .find('.accounts .account .controls Button')
+    .last()
     .simulate('click');
 
   expect(historyMock.push).toHaveBeenCalledWith(`/accounts/${accountId}`);

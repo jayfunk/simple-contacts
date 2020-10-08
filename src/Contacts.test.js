@@ -59,7 +59,7 @@ it('should render a contacts lead source with display value', () => {
   expect(wrapper.find('.contact > div').at(3)).toIncludeText('Web');
 });
 
-it('should navigate to a contact detail page when a contact row is clicked', () => {
+it('should navigate to a contact detail page when contact detail button is clicked', () => {
   const historyMock = {
     push: jest.fn()
   };
@@ -89,8 +89,8 @@ it('should navigate to a contact detail page when a contact row is clicked', () 
   );
 
   wrapper
-    .find('.contact > div')
-    .first()
+    .find('.contact .controls > Button')
+    .last()
     .simulate('click');
 
   expect(historyMock.push).toHaveBeenCalledWith(`/accounts/account-id/contacts/${contactId}`);
