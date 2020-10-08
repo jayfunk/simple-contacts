@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Modal, Button, Form} from 'react-bootstrap';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {isPossiblePhoneNumber} from 'react-phone-number-input';
+import PhoneInput from 'react-phone-number-input/input';
+
 import {LEAD_SOURCE_WEB, LEAD_SOURCE_OPTIONS} from './constants';
+import {updateContact, addContact} from './actions/accounts';
 
 const REQUIRED_FIELDS = ['name', 'phone', 'email', 'leadSource'];
 const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
-class ContactModal extends Component {
+class ContactDetailsModal extends Component {
   constructor(props) {
     super(props);
 
@@ -28,6 +34,7 @@ class ContactModal extends Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handlePhoneInputChange = this.handlePhoneInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isValidInput = this.isValidInput.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -41,6 +48,15 @@ class ContactModal extends Component {
       contact: {
         ...this.state.contact,
         [name]: target.value
+      }
+    });
+  }
+
+  handlePhoneInputChange(value) {
+    this.setState({
+      contact: {
+        ...this.state.contact,
+        phone: value
       }
     });
   }
@@ -65,24 +81,26 @@ class ContactModal extends Component {
   isValidInput() {
     const contact = this.state.contact;
     const contactKeys = Object.keys(contact);
-
     const allFieldsValid = contactKeys.every((key) => {
       const fieldValue = contact[key];
+      let isValid = false;
       if (key === 'email') {
-        return EMAIL_REGEX.test(fieldValue);
+        isValid = EMAIL_REGEX.test(fieldValue);
+      } else if (key === 'phone') {
+        isValid = isPossiblePhoneNumber(fieldValue);
+      } else if (typeof fieldValue === 'string') {
+        isValid = fieldValue.trim() !== '';
+      } else {
+        isValid = fieldValue !== -1;
       }
-      if (typeof fieldValue === 'string') {
-        return fieldValue.trim() !== '';
-      }
-      return fieldValue !== -1;
+      return isValid;
     });
     const hasAllRequiredFields = REQUIRED_FIELDS.every((key) => contactKeys.includes(key));
-
     return allFieldsValid && hasAllRequiredFields;
   }
 
   closeModal() {
-    this.props.history.push(this.props.match.url);
+    this.props.history.push('/');
   }
 
   render() {
@@ -91,7 +109,7 @@ class ContactModal extends Component {
     return (
       <Modal show onHide={this.closeModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Contact</Modal.Title>
+          <Modal.Title>Contact Details</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -109,12 +127,13 @@ class ContactModal extends Component {
               </Form.Group>
               <Form.Group controlId="phone">
                 <Form.Label>Phone</Form.Label>
-                <Form.Control
-                  name="phone"
-                  type="text"
+                <PhoneInput
+                  country="US"
+                  inputComponent={Form.Control}
                   required
+                  pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                   value={contact.phone}
-                  onChange={this.handleInputChange}
+                  onChange={this.handlePhoneInputChange}
                 />
               </Form.Group>
             </Form.Row>
@@ -154,7 +173,7 @@ class ContactModal extends Component {
           <Button variant="primary" name="save" type="submit" onClick={this.handleSubmit}>
             Save
           </Button>
-          <Button variant="secondary" onClick={this.closeModal}>
+          <Button variant="link" onClick={this.closeModal}>
             Close
           </Button>
         </Modal.Footer>
@@ -163,7 +182,7 @@ class ContactModal extends Component {
   }
 }
 
-ContactModal.propTypes = {
+ContactDetailsModal.propTypes = {
   accountId: PropTypes.string.isRequired,
   contact: PropTypes.object,
   history: PropTypes.object.isRequired,
@@ -172,4 +191,14 @@ ContactModal.propTypes = {
   updateContact: PropTypes.func.isRequired
 };
 
-export default ContactModal;
+const mapDispatchToProps = {
+  addContact,
+  updateContact
+};
+
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(ContactDetailsModal)
+);

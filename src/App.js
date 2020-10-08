@@ -1,42 +1,221 @@
-import React from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {Switch, Route, Redirect, Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {Button} from 'react-bootstrap';
 
-import Accounts from './Accounts';
-import Account from './Account';
+import {RATING_OPTIONS, INDUSTRY_OPTIONS, STATE_OPTIONS} from './constants';
+import filterAccounts from './filterAccounts';
+import AccountFilters from './AccountFilters';
+import AccountDetailsModal from './AccountDetailsModal';
+import ContactDetailsModal from './ContactDetailsModal';
+import Contacts from './Contacts';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-function App(props) {
-  return (
-    <div className="App container">
-      <Switch>
-        <Route exact path="/">
-          <Accounts accounts={props.accounts} />
-        </Route>
-        <Route
-          path="/accounts/:accountId"
-          render={({match}) => {
-            const accountId = match.params.accountId;
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+});
 
-            if (accountId === 'new') {
-              return <Account account={null} />;
-            }
+export class App extends Component {
+  constructor(props) {
+    super(props);
 
-            const account = props.accounts.find((account) => account.id === accountId);
+    this.state = {};
 
-            if (!account) {
-              return <Redirect to="/" />;
-            }
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+  }
 
-            return <Account account={account} />;
-          }}
-        />
-      </Switch>
-    </div>
-  );
+  toggleExpanded(accountId) {
+    this.setState({
+      [accountId]: this.state[accountId] === null ? true : !this.state[accountId]
+    });
+  }
+
+  isAccountExpanded(accountId) {
+    return this.state[accountId] === true;
+  }
+
+  handleFilterChange(filters) {
+    this.setState({
+      ...filters
+    });
+  }
+
+  renderAccountAddress(address) {
+    return `${address.street} ${address.city}, ${STATE_OPTIONS[address.state]}`;
+  }
+
+  renderAccounts() {
+    return filterAccounts(this.state, this.props.accounts).map((account) => {
+      const accountId = account.id;
+      const openModal = () => {
+        this.props.history.push(`/accounts/${accountId}`);
+      };
+      const expanded = this.isAccountExpanded(accountId);
+
+      return (
+        <div className="account row" key={accountId}>
+          <div className="col-6 col-md-2" onClick={openModal}>
+            {account.name}
+          </div>
+          <div className="col-6 col-md-2" onClick={openModal}>
+            {this.renderAccountAddress(account.address)}
+          </div>
+          <div className="col-3 col-md-2" onClick={openModal}>
+            {INDUSTRY_OPTIONS[account.industry]}
+          </div>
+          <div className="col-3 col-md-2" onClick={openModal}>
+            {currencyFormatter.format(account.annualRevenue)}
+          </div>
+          <div className="col-3 col-md-1" onClick={openModal}>
+            {RATING_OPTIONS[account.rating]}
+          </div>
+          <div className="col-3 col-md-2" onClick={openModal}>
+            {account.establishedDate.toString()}
+          </div>
+          <div className="col-md-1 controls">
+            <Button
+              variant="link"
+              size="sm"
+              className="add-contact col-md-6"
+              onClick={() => {
+                this.props.history.push(`/accounts/${accountId}/contacts/new`);
+              }}
+            >
+              <svg
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+                className="bi bi-plus"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+                />
+              </svg>
+            </Button>
+            <Button
+              variant="link"
+              size="sm"
+              className="expander col-md-6"
+              onClick={this.toggleExpanded.bind(this, accountId)}
+            >
+              {expanded === false ? (
+                <svg
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 16 16"
+                  className="bi bi-arrows-expand"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zM7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10z"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 16 16"
+                  className="bi bi-arrows-collapse"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zm7-8a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 4.293V.5A.5.5 0 0 1 8 0zm-.5 11.707l-1.146 1.147a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 11.707V15.5a.5.5 0 0 1-1 0v-3.793z"
+                  />
+                </svg>
+              )}
+            </Button>
+          </div>
+          {expanded === true && <Contacts accountId={accountId} contacts={account.contacts} />}
+        </div>
+      );
+    });
+  }
+
+  render() {
+    return (
+      <div className="app container">
+        <div className="row">
+          <AccountFilters accounts={this.props.accounts} onFilterChange={this.handleFilterChange} />
+        </div>
+        <div className="row">
+          <Link className="col-xs-2 mb-3 btn btn-primary" to="/accounts/new">
+            Add Account
+          </Link>
+        </div>
+        <div className="accounts row mb-5">
+          <div className="col">
+            <div className="header row">
+              <div className="col-6 col-md-2">Name</div>
+              <div className="col-6 col-md-2">Address</div>
+              <div className="col-3 col-md-2">Industry</div>
+              <div className="col-3 col-md-2">Revenue</div>
+              <div className="col-3 col-md-1">Rating</div>
+              <div className="col-3 col-md-2">Est. Date</div>
+            </div>
+            {this.renderAccounts()}
+          </div>
+        </div>
+        <Switch>
+          <Route
+            exact
+            path="/accounts/:accountId"
+            render={({match}) => {
+              const accountId = match.params.accountId;
+
+              if (accountId === 'new') {
+                return <AccountDetailsModal account={null} />;
+              }
+
+              const account = this.props.accounts.find((account) => account.id === accountId);
+
+              if (!account) {
+                return <Redirect to="/" />;
+              }
+
+              return <AccountDetailsModal account={account} />;
+            }}
+          />
+          <Route
+            path="/accounts/:accountId/contacts/:contactId"
+            render={({match}) => {
+              const contactId = match.params.contactId;
+              const accountId = match.params.accountId;
+
+              if (contactId === 'new') {
+                return <ContactDetailsModal accountId={accountId} contact={null} />;
+              }
+
+              const account = this.props.accounts.find((account) => account.id === accountId);
+              const contact = account.contacts.find((contact) => contact.id === contactId);
+
+              if (!contact) {
+                return <Redirect to="/" />;
+              }
+
+              return <ContactDetailsModal accountId={accountId} contact={contact} />;
+            }}
+          />
+        </Switch>
+      </div>
+    );
+  }
 }
+
+App.propTypes = {
+  accounts: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired
+};
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -44,4 +223,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+export default withRouter(connect(mapStateToProps)(App));

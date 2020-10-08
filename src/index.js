@@ -33,14 +33,14 @@ const store = configureStore({
         state: 'TX'
       },
       industry: INDUSTRY_UTILITIES,
-      annualRevenue: 1000000000,
+      annualRevenue: 100000,
       rating: RATING_COLD,
       establishedDate: '2010-04-07',
       contacts: [
         {
           id: 'contact-1',
-          name: 'New Contact',
-          phone: '55555555555',
+          name: 'Jim Thomas',
+          phone: '+15555555555',
           email: 'contact1@contacts.com',
           leadSource: LEAD_SOURCE_PHONE
         }
@@ -61,8 +61,8 @@ const store = configureStore({
       contacts: [
         {
           id: 'contact-2',
-          name: 'New Contact',
-          phone: '55555555555',
+          name: 'Allie Barr',
+          phone: '+15555555555',
           email: 'contact1@contacts.com',
           leadSource: LEAD_SOURCE_PHONE
         }
@@ -83,8 +83,8 @@ const store = configureStore({
       contacts: [
         {
           id: 'contact-3',
-          name: 'New Contact',
-          phone: '55555555555',
+          name: 'Lisa Newman',
+          phone: '+15555555555',
           email: 'contact1@contacts.com',
           leadSource: LEAD_SOURCE_PHONE
         }

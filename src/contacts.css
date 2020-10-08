@@ -1,0 +1,11 @@
+.contacts {
+  margin-top: 1rem;
+  margin-left: 1rem !important;
+  background-color: #e9ecef;
+  border: 1px inset #dee2e6;
+  cursor: default;
+}
+
+.contacts .contact {
+  cursor: pointer;
+}

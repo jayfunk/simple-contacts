@@ -1,3 +1,65 @@
-.App {
+.app {
+}
+
+.app .btn {
+  font-size: 1em;
+}
+
+.app .accounts {
+}
+
+.app .accounts .row {
+  padding: 0.75rem;
+}
+
+.app .accounts .header {
+  cursor: default;
+  background-color: #343a40;
+  color: white;
+}
+
+.app .accounts .row {
   text-align: center;
+}
+
+.app .accounts .account {
+  cursor: pointer;
+  border-top: 1px solid #dee2e6;
+  position: relative;
+}
+
+.app .accounts .account:hover {
+  background-color: #e9ecef;
+}
+
+.app .accounts .account .btn.focus,
+.app .accounts .account .btn:focus {
+  box-shadow: none;
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: 0.75rem;
+  }
+
+  .app .accounts .header > [class*='col-'],
+  .app .accounts .account > [class*='col-'] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .app .accounts .account .controls > .btn {
+    margin-top: 0.5rem;
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+  }
+
+  .app .accounts .account .controls > .btn:hover {
+    color: #212529;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+  }
 }

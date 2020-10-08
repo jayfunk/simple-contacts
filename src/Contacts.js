@@ -1,49 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, Table} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {withRouter, Link, Switch, Route, Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
+import {formatPhoneNumber} from 'react-phone-number-input';
 
 import {removeContact, addContact, updateContact} from './actions/accounts';
 import {LEAD_SOURCE_OPTIONS} from './constants';
-import ContactModal from './ContactModal';
+
+import './contacts.css';
 
 function renderContacts(history, accountId, contacts, removeContact) {
   return contacts.map((contact) => {
+    const openModal = () => {
+      history.push(`/accounts/${accountId}/contacts/${contact.id}`);
+    };
+
     return (
-      <tr key={contact.id}>
-        <td>{contact.name}</td>
-        <td>{contact.phone}</td>
-        <td>{contact.email}</td>
-        <td>{LEAD_SOURCE_OPTIONS[contact.leadSource]}</td>
-        <td>
-          <Button
-            className="edit"
-            variant="info"
-            size="sm"
-            onClick={() => {
-              history.push(`/accounts/${accountId}/contacts/${contact.id}`);
-            }}
-          >
-            <svg
-              width="1em"
-              height="1em"
-              viewBox="0 0 16 16"
-              className="bi bi-pencil"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"
-              />
-            </svg>
-          </Button>
-        </td>
-        <td>
+      <div key={contact.id} className="contact row">
+        <div className="col-6 col-sm-6 col-lg-2" onClick={openModal}>
+          {contact.name}
+        </div>
+        <div className="col-6 col-sm-6 col-lg-3" onClick={openModal}>
+          {formatPhoneNumber(contact.phone)}
+        </div>
+        <div className="col-6 col-sm-6 col-lg-3" onClick={openModal}>
+          {contact.email}
+        </div>
+        <div className="col-6 col-sm-6 col-lg-2" onClick={openModal}>
+          {LEAD_SOURCE_OPTIONS[contact.leadSource]}
+        </div>
+        <div className="col-12 col-lg-2">
           <Button
             className="delete"
-            variant="danger"
+            variant="link"
             size="sm"
             onClick={() => {
               removeContact(accountId, contact.id);
@@ -64,72 +54,34 @@ function renderContacts(history, accountId, contacts, removeContact) {
               />
             </svg>
           </Button>
-        </td>
-      </tr>
+        </div>
+      </div>
     );
   });
 }
 
 export function Contacts(props) {
   return (
-    <React.Fragment>
+    <div className="contacts container">
       <div className="row">
-        <Link className="mb-3 btn btn-primary" to={`${props.match.url}/contacts/new`}>
-          Add Contact
-        </Link>
+        <div className="col">
+          {props.contacts.length === 0 ? (
+            <div>
+              <Button
+                variant="link"
+                onClick={() => {
+                  props.history.push(`/accounts/${props.accountId}/contacts/new`);
+                }}
+              >
+                Add Contact
+              </Button>
+            </div>
+          ) : (
+            renderContacts(props.history, props.accountId, props.contacts, props.removeContact)
+          )}
+        </div>
       </div>
-      <div className="row">
-        <Table striped bordered hover>
-          <thead className="thead-dark">
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Email</th>
-              <th scope="col">Lead Source</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {renderContacts(props.history, props.accountId, props.contacts, props.removeContact)}
-          </tbody>
-        </Table>
-      </div>
-      <Switch>
-        <Route path={`${props.match.path}/contacts/new`}>
-          <ContactModal
-            accountId={props.accountId}
-            contact={null}
-            match={props.match}
-            history={props.history}
-            addContact={props.addContact}
-            updateContact={props.updateContact}
-          />
-        </Route>
-        <Route
-          path={`${props.match.path}/contacts/:contactId`}
-          render={({match}) => {
-            const contactId = match.params.contactId;
-            const contact = props.contacts.find((contact) => contact.id === contactId);
-
-            if (!contact) {
-              return <Redirect to={props.match.path} />;
-            }
-
-            return (
-              <ContactModal
-                accountId={props.accountId}
-                contact={contact}
-                match={props.match}
-                history={props.history}
-                addContact={props.addContact}
-                updateContact={props.updateContact}
-              />
-            );
-          }}
-        />
-      </Switch>
-    </React.Fragment>
+    </div>
   );
 }
 
@@ -138,7 +90,9 @@ Contacts.propTypes = {
   contacts: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-  removeContact: PropTypes.func.isRequired
+  removeContact: PropTypes.func.isRequired,
+  addContact: PropTypes.func.isRequired,
+  updateContact: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {

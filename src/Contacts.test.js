@@ -23,12 +23,13 @@ it('should render a contact', () => {
         url: '',
         path: ''
       }}
+      addContact={() => {}}
+      updateContact={() => {}}
       removeContact={() => {}}
     />
   );
 
-  expect(wrapper.find('tbody tr')).toExist();
-  expect(wrapper.find('tbody tr td').first()).toIncludeText('New Contact');
+  expect(wrapper.find('.contact > div').first()).toIncludeText('New Contact');
 });
 
 it('should render a contacts lead source with display value', () => {
@@ -49,11 +50,13 @@ it('should render a contacts lead source with display value', () => {
         url: '',
         path: ''
       }}
+      addContact={() => {}}
+      updateContact={() => {}}
       removeContact={() => {}}
     />
   );
 
-  expect(wrapper.find('tbody tr td').at(3)).toIncludeText('Web');
+  expect(wrapper.find('.contact > div').at(3)).toIncludeText('Web');
 });
 
 it('should navigate to a contact detail page when a contact row is clicked', () => {
@@ -79,11 +82,16 @@ it('should navigate to a contact detail page when a contact row is clicked', () 
         url: '',
         path: ''
       }}
+      addContact={() => {}}
+      updateContact={() => {}}
       removeContact={() => {}}
     />
   );
 
-  wrapper.find('.edit').simulate('click');
+  wrapper
+    .find('.contact > div')
+    .first()
+    .simulate('click');
 
   expect(historyMock.push).toHaveBeenCalledWith(`/accounts/account-id/contacts/${contactId}`);
 });
@@ -108,6 +116,8 @@ it('should delete a contact when the delete icon is clicked', () => {
         url: '',
         path: ''
       }}
+      addContact={() => {}}
+      updateContact={() => {}}
       removeContact={removeContactMock}
     />
   );
