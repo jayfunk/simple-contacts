@@ -48,7 +48,7 @@ export default function Accounts(state = getInitialState(), action = {}) {
 
       const updatedAccount = {
         ...account,
-        contacts: [action.payload.contact, ...account.contacts]
+        contacts: [...account.contacts, action.payload.contact]
       };
 
       const updatedState = state.slice();
