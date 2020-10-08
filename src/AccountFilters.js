@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Form, Col, Row, Jumbotron, InputGroup} from 'react-bootstrap';
+import {Form, Col, Jumbotron} from 'react-bootstrap';
+import CurrencyInput from 'react-currency-input-field';
+import isNil from 'lodash/isNil';
 
 import {RATING_OPTIONS, INDUSTRY_OPTIONS, STATE_OPTIONS} from './constants';
 
@@ -45,13 +47,11 @@ class AccountFilters extends Component {
     });
   }
 
-  handleRevenueChange(event) {
-    const target = event.target;
-    const name = target.name;
+  handleRevenueChange(value, name) {
     this.setState({
       annualRevenue: {
         ...this.state.annualRevenue,
-        [name]: target.value
+        [name]: isNil(value) ? '' : value.trim().replace(/\D/, '')
       }
     });
   }
@@ -136,10 +136,14 @@ class AccountFilters extends Component {
             <Form.Group as={Col} controlId="annualRevenue">
               <Form.Label>Annual Revenue Range</Form.Label>
               <Form.Control
-                name="lessAnnualRevenue"
-                type="number"
-                value={this.state.annualRevenue.lessAnnualRevenue}
+                name="greaterAnnualRevenue"
+                required
+                value={this.state.annualRevenue.greaterAnnualRevenue}
                 onChange={this.handleRevenueChange}
+                allowDecimals={false}
+                allowNegativeValue={false}
+                prefix="$"
+                as={CurrencyInput}
               />
             </Form.Group>
             <div className="col-md-2 form-separator">
@@ -154,10 +158,14 @@ class AccountFilters extends Component {
                 Annual Revenue
               </Form.Label>
               <Form.Control
-                name="greaterAnnualRevenue"
-                type="number"
-                value={this.state.annualRevenue.greaterAnnualRevenue}
+                name="lessAnnualRevenue"
+                required
+                value={this.state.annualRevenue.lessAnnualRevenue}
                 onChange={this.handleRevenueChange}
+                allowDecimals={false}
+                allowNegativeValue={false}
+                prefix="$"
+                as={CurrencyInput}
               />
             </Form.Group>
           </Form.Row>
