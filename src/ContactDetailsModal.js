@@ -173,7 +173,7 @@ class ContactDetailsModal extends Component {
           <Button variant="primary" name="save" type="submit" onClick={this.handleSubmit}>
             Save
           </Button>
-          <Button variant="secondary" onClick={this.closeModal}>
+          <Button variant="link" onClick={this.closeModal}>
             Close
           </Button>
         </Modal.Footer>

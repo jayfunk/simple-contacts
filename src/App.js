@@ -70,17 +70,17 @@ export class App extends Component {
           <div className="col-3 col-md-2" onClick={openModal}>
             {currencyFormatter.format(account.annualRevenue)}
           </div>
-          <div className="col-2 col-md-1" onClick={openModal}>
+          <div className="col-3 col-md-1" onClick={openModal}>
             {RATING_OPTIONS[account.rating]}
           </div>
           <div className="col-3 col-md-2" onClick={openModal}>
             {account.establishedDate.toString()}
           </div>
-          <div className="col-md-1">
+          <div className="col-md-1 controls">
             <Button
               variant="link"
               size="sm"
-              className="add-contact col-md-6 col-2"
+              className="add-contact col-md-6"
               onClick={() => {
                 this.props.history.push(`/accounts/${accountId}/contacts/new`);
               }}
@@ -102,7 +102,7 @@ export class App extends Component {
             <Button
               variant="link"
               size="sm"
-              className="expander col-md-6  col-10"
+              className="expander col-md-6"
               onClick={this.toggleExpanded.bind(this, accountId)}
             >
               {expanded === false ? (
@@ -110,13 +110,13 @@ export class App extends Component {
                   width="1em"
                   height="1em"
                   viewBox="0 0 16 16"
-                  className="bi bi-chevron-left"
+                  className="bi bi-arrows-expand"
                   fill="currentColor"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     fillRule="evenodd"
-                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+                    d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zM7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10z"
                   />
                 </svg>
               ) : (
@@ -124,13 +124,13 @@ export class App extends Component {
                   width="1em"
                   height="1em"
                   viewBox="0 0 16 16"
-                  className="bi bi-chevron-down"
+                  className="bi bi-arrows-collapse"
                   fill="currentColor"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     fillRule="evenodd"
-                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                    d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zm7-8a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 4.293V.5A.5.5 0 0 1 8 0zm-.5 11.707l-1.146 1.147a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 11.707V15.5a.5.5 0 0 1-1 0v-3.793z"
                   />
                 </svg>
               )}
@@ -160,9 +160,8 @@ export class App extends Component {
               <div className="col-6 col-md-2">Address</div>
               <div className="col-3 col-md-2">Industry</div>
               <div className="col-3 col-md-2">Revenue</div>
-              <div className="col-2 col-md-1">Rating</div>
+              <div className="col-3 col-md-1">Rating</div>
               <div className="col-3 col-md-2">Est. Date</div>
-              <div className="col-md-1"></div>
             </div>
             {this.renderAccounts()}
           </div>

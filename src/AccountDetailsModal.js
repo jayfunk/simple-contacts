@@ -151,7 +151,7 @@ export class AccountDetailsModal extends Component {
           </Button>
         </Col>
         <Col xs="auto">
-          <Button variant="secondary" name="cancel" type="button" onClick={this.closeModal}>
+          <Button variant="link" name="cancel" type="button" onClick={this.closeModal}>
             Cancel
           </Button>
         </Col>

@@ -32,8 +32,8 @@
   background-color: #e9ecef;
 }
 
-.app .accounts .account .expander.focus,
-.app .accounts .account .expander:focus {
+.app .accounts .account .btn.focus,
+.app .accounts .account .btn:focus {
   box-shadow: none;
 }
 
@@ -50,15 +50,16 @@
 }
 
 @media (max-width: 767px) {
-  .app .accounts .account .expander {
-    color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d;
+  .app .accounts .account .controls > .btn {
+    margin-top: 0.5rem;
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
   }
 
-  .app .accounts .account .expander:hover {
-    color: #fff;
-    background-color: #5a6268;
-    border-color: #545b62;
+  .app .accounts .account .controls > .btn:hover {
+    color: #212529;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
   }
 }
