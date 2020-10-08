@@ -15,8 +15,9 @@ function renderContacts(history, accountId, contacts, removeContact) {
     const openModal = () => {
       history.push(`/accounts/${accountId}/contacts/${contact.id}`);
     };
+
     return (
-      <div key={contact.id} className="row">
+      <div key={contact.id} className="contact row">
         <div className="col-6 col-sm-6 col-lg-2" onClick={openModal}>
           {contact.name}
         </div>
