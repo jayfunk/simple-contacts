@@ -70,6 +70,8 @@ function renderContacts(history, accountId, contacts, removeContact) {
 export function Contacts(props) {
   return (
     <div className="contacts container">
+      <hr className="contacts-guide contacts-guide-vertical" />
+      <hr className="contacts-guide " />
       <div className="row">
         <div className="col">
           {props.contacts.length === 0 ? (

@@ -2,10 +2,32 @@
   margin-top: 1rem;
   margin-left: 1rem !important;
   background-color: #e9ecef;
-  border: 1px inset #dee2e6;
+  border: 1px solid #dee2e6;
   cursor: default;
+  position: relative;
+}
+
+.contacts .contacts-guide {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 2rem;
+  position: absolute;
+  top: 1rem;
+  left: -1rem;
+}
+
+.contacts .contacts-guide-vertical {
+  width: 5rem;
+  transform: rotate(90deg);
+  top: -1.5rem;
+  left: -3.5rem;
 }
 
 .contacts .contact {
-  cursor: pointer;
+  border-top: 1px solid #dee2e6;
+  padding: 0 !important;
+}
+
+.contacts .contact:first-child {
+  border-top: 0;
 }
