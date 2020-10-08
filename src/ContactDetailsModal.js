@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Modal, Button, Form} from 'react-bootstrap';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {isValidPhoneNumber} from 'react-phone-number-input';
+import {isPossiblePhoneNumber} from 'react-phone-number-input';
 import PhoneInput from 'react-phone-number-input/input';
 
 import {LEAD_SOURCE_WEB, LEAD_SOURCE_OPTIONS} from './constants';
@@ -81,22 +81,21 @@ class ContactDetailsModal extends Component {
   isValidInput() {
     const contact = this.state.contact;
     const contactKeys = Object.keys(contact);
-
     const allFieldsValid = contactKeys.every((key) => {
       const fieldValue = contact[key];
+      let isValid = false;
       if (key === 'email') {
-        return EMAIL_REGEX.test(fieldValue);
+        isValid = EMAIL_REGEX.test(fieldValue);
+      } else if (key === 'phone') {
+        isValid = isPossiblePhoneNumber(fieldValue);
+      } else if (typeof fieldValue === 'string') {
+        isValid = fieldValue.trim() !== '';
+      } else {
+        isValid = fieldValue !== -1;
       }
-      if (key === 'phone') {
-        return isValidPhoneNumber(fieldValue);
-      }
-      if (typeof fieldValue === 'string') {
-        return fieldValue.trim() !== '';
-      }
-      return fieldValue !== -1;
+      return isValid;
     });
     const hasAllRequiredFields = REQUIRED_FIELDS.every((key) => contactKeys.includes(key));
-
     return allFieldsValid && hasAllRequiredFields;
   }
 
