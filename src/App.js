@@ -16,9 +16,8 @@ import './App.css';
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
-  currency: 'USD',
+  currency: 'USD'
 });
-
 
 export class App extends Component {
   constructor(props) {
