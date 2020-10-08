@@ -33,7 +33,7 @@ const store = configureStore({
         state: 'TX'
       },
       industry: INDUSTRY_UTILITIES,
-      annualRevenue: 1000000000,
+      annualRevenue: 100000,
       rating: RATING_COLD,
       establishedDate: '2010-04-07',
       contacts: [
