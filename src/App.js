@@ -54,33 +54,34 @@ export class App extends Component {
       const openModal = () => {
         this.props.history.push(`/accounts/${accountId}`);
       };
+      const toggleExpanded = this.toggleExpanded.bind(this, accountId);
       const expanded = this.isAccountExpanded(accountId);
 
       return (
         <div className="account row" key={accountId}>
-          <div className="col-6 col-md-2" onClick={openModal}>
+          <div className="col-6 col-md-2" onClick={toggleExpanded}>
             {account.name}
           </div>
-          <div className="col-6 col-md-2" onClick={openModal}>
+          <div className="col-6 col-md-2" onClick={toggleExpanded}>
             {this.renderAccountAddress(account.address)}
           </div>
-          <div className="col-3 col-md-2" onClick={openModal}>
+          <div className="col-3 col-md-2" onClick={toggleExpanded}>
             {INDUSTRY_OPTIONS[account.industry]}
           </div>
-          <div className="col-3 col-md-2" onClick={openModal}>
+          <div className="col-3 col-md-2" onClick={toggleExpanded}>
             {currencyFormatter.format(account.annualRevenue)}
           </div>
-          <div className="col-3 col-md-1" onClick={openModal}>
+          <div className="col-3 col-md-1" onClick={toggleExpanded}>
             {RATING_OPTIONS[account.rating]}
           </div>
-          <div className="col-3 col-md-2" onClick={openModal}>
+          <div className="col-3 col-md-2" onClick={toggleExpanded}>
             {account.establishedDate.toString()}
           </div>
           <div className="col-md-1 controls">
             <Button
               variant="link"
               size="sm"
-              className="add-contact col-md-6"
+              className="add-contact col-1 col-md-6"
               onClick={() => {
                 this.props.history.push(`/accounts/${accountId}/contacts/new`);
               }}
@@ -99,41 +100,20 @@ export class App extends Component {
                 />
               </svg>
             </Button>
-            <Button
-              variant="link"
-              size="sm"
-              className="expander col-md-6"
-              onClick={this.toggleExpanded.bind(this, accountId)}
-            >
-              {expanded === false ? (
-                <svg
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 16 16"
-                  className="bi bi-arrows-expand"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zM7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10z"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 16 16"
-                  className="bi bi-arrows-collapse"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zm7-8a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 4.293V.5A.5.5 0 0 1 8 0zm-.5 11.707l-1.146 1.147a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 11.707V15.5a.5.5 0 0 1-1 0v-3.793z"
-                  />
-                </svg>
-              )}
+            <Button variant="link" size="sm" className=" col-1 col-md-6" onClick={openModal}>
+              <svg
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+                class="bi bi-three-dots-vertical"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                />
+              </svg>
             </Button>
           </div>
           {expanded === true && <Contacts accountId={accountId} contacts={account.contacts} />}

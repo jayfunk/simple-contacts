@@ -51,7 +51,7 @@
 
 @media (max-width: 767px) {
   .app .accounts .account .controls > .btn {
-    margin-top: 0.5rem;
+    margin-right: 0.5rem;
     color: #212529;
     background-color: #f8f9fa;
     border-color: #f8f9fa;
