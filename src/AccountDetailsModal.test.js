@@ -22,6 +22,13 @@ function changeFormControlValue(wrapper, name, value) {
     .simulate('change', {target: {value, name}});
 }
 
+function changeRevenueFormValue(wrapper, name, value) {
+  wrapper
+    .find(Form.Control)
+    .find({name})
+    .simulate('change', value, name);
+}
+
 function getFormControlValue(wrapper, name) {
   return wrapper
     .find(Form.Control)
@@ -45,7 +52,7 @@ it('should render existing account', () => {
           state: 'GA'
         },
         industry: INDUSTRY_SHIPPING,
-        annualRevenue: 100000000,
+        annualRevenue: '100000000',
         rating: RATING_WARM,
         establishedDate: '2019-12-31',
         contacts: []
@@ -58,7 +65,7 @@ it('should render existing account', () => {
   expect(getFormControlValue(wrapper, 'city')).toEqual('Atlanta');
   expect(getFormControlValue(wrapper, 'state')).toEqual('GA');
   expect(getFormControlValue(wrapper, 'industry')).toEqual('shipping');
-  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual(100000000);
+  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual('100000000');
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_WARM);
   expect(getFormControlValue(wrapper, 'establishedDate')).toEqual('2019-12-31');
 
@@ -98,7 +105,7 @@ it('should update fields on user input', () => {
           state: 'GA'
         },
         industry: INDUSTRY_SHIPPING,
-        annualRevenue: 100000000,
+        annualRevenue: '100000000',
         rating: RATING_WARM,
         establishedDate: '2019-12-31',
         contacts: []
@@ -111,7 +118,7 @@ it('should update fields on user input', () => {
   changeFormControlValue(wrapper, 'city', 'Austin');
   changeFormControlValue(wrapper, 'state', 'TX');
   changeFormControlValue(wrapper, 'industry', INDUSTRY_MEDIA);
-  changeFormControlValue(wrapper, 'annualRevenue', 100);
+  changeRevenueFormValue(wrapper, 'annualRevenue', '100');
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
   changeFormControlValue(wrapper, 'establishedDate', '2011-01-13');
 
@@ -120,7 +127,7 @@ it('should update fields on user input', () => {
   expect(getFormControlValue(wrapper, 'city')).toEqual('Austin');
   expect(getFormControlValue(wrapper, 'state')).toEqual('TX');
   expect(getFormControlValue(wrapper, 'industry')).toEqual(INDUSTRY_MEDIA);
-  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual(100);
+  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual('100');
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_COLD);
   expect(getFormControlValue(wrapper, 'establishedDate')).toEqual('2011-01-13');
 });
@@ -145,7 +152,7 @@ it('should go back when cancel is pressed', () => {
           state: 'GA'
         },
         industry: INDUSTRY_SHIPPING,
-        annualRevenue: 100000000,
+        annualRevenue: '100000000',
         rating: RATING_WARM,
         establishedDate: '2019-12-31',
         contacts: []
@@ -206,7 +213,7 @@ it('should call createAccount action creator when save is pressed and account is
   changeFormControlValue(wrapper, 'city', 'Austin');
   changeFormControlValue(wrapper, 'state', 'TX');
   changeFormControlValue(wrapper, 'industry', INDUSTRY_MEDIA);
-  changeFormControlValue(wrapper, 'annualRevenue', 100);
+  changeRevenueFormValue(wrapper, 'annualRevenue', '100');
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
   changeFormControlValue(wrapper, 'establishedDate', '2011-01-13');
 
@@ -221,7 +228,7 @@ it('should call createAccount action creator when save is pressed and account is
         state: 'TX'
       },
       industry: INDUSTRY_MEDIA,
-      annualRevenue: 100,
+      annualRevenue: '100',
       rating: RATING_COLD,
       establishedDate: '2011-01-13'
     },
@@ -255,7 +262,7 @@ it('should call updateAccount action creator when save is pressed and account is
           state: 'GA'
         },
         industry: INDUSTRY_SHIPPING,
-        annualRevenue: 100000000,
+        annualRevenue: '100000000',
         rating: RATING_WARM,
         establishedDate: '2019-12-31',
         contacts: []
@@ -268,7 +275,7 @@ it('should call updateAccount action creator when save is pressed and account is
   changeFormControlValue(wrapper, 'city', 'Austin');
   changeFormControlValue(wrapper, 'state', 'TX');
   changeFormControlValue(wrapper, 'industry', INDUSTRY_MEDIA);
-  changeFormControlValue(wrapper, 'annualRevenue', 100);
+  changeRevenueFormValue(wrapper, 'annualRevenue', '100');
   changeFormControlValue(wrapper, 'rating', RATING_COLD);
   changeFormControlValue(wrapper, 'establishedDate', '2011-01-13');
 
@@ -277,7 +284,7 @@ it('should call updateAccount action creator when save is pressed and account is
   expect(getFormControlValue(wrapper, 'city')).toEqual('Austin');
   expect(getFormControlValue(wrapper, 'state')).toEqual('TX');
   expect(getFormControlValue(wrapper, 'industry')).toEqual(INDUSTRY_MEDIA);
-  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual(100);
+  expect(getFormControlValue(wrapper, 'annualRevenue')).toEqual('100');
   expect(getFormControlValue(wrapper, 'rating')).toEqual(RATING_COLD);
   expect(getFormControlValue(wrapper, 'establishedDate')).toEqual('2011-01-13');
 
@@ -291,7 +298,7 @@ it('should call updateAccount action creator when save is pressed and account is
       state: 'TX'
     },
     industry: INDUSTRY_MEDIA,
-    annualRevenue: 100,
+    annualRevenue: '100',
     rating: RATING_COLD,
     establishedDate: '2011-01-13'
   });
@@ -322,7 +329,7 @@ it('should call removeAccount action creator when remove is pressed', () => {
           state: 'GA'
         },
         industry: INDUSTRY_SHIPPING,
-        annualRevenue: 100000000,
+        annualRevenue: '100000000',
         rating: RATING_WARM,
         establishedDate: '2019-12-31',
         contacts: []
