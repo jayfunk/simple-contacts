@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {Form, Button, Col, Modal} from 'react-bootstrap';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
+import CurrencyInput from 'react-currency-input-field';
+import isNil from 'lodash/isNil';
 
 import {
   INDUSTRY_OPTIONS,
@@ -50,6 +52,7 @@ export class AccountDetailsModal extends Component {
     this.isValidInput = this.isValidInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleRevenueChange = this.handleRevenueChange.bind(this);
   }
 
   isNewAccount() {
@@ -126,6 +129,15 @@ export class AccountDetailsModal extends Component {
       account: {
         ...this.state.account,
         [name]: target.value
+      }
+    });
+  }
+
+  handleRevenueChange(value) {
+    this.setState({
+      account: {
+        ...this.state.account,
+        annualRevenue: isNil(value) ? '' : value.trim().replace(/\D/, '')
       }
     });
   }
@@ -243,10 +255,13 @@ export class AccountDetailsModal extends Component {
                 <Form.Label>Annual Revenue</Form.Label>
                 <Form.Control
                   name="annualRevenue"
-                  type="number"
                   required
                   value={account.annualRevenue}
-                  onChange={this.handleInputChange}
+                  onChange={this.handleRevenueChange}
+                  allowDecimals={false}
+                  allowNegativeValue={false}
+                  prefix="$"
+                  as={CurrencyInput}
                 />
               </Form.Group>
               <Form.Group as={Col} controlId="rating">

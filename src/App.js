@@ -14,6 +14,12 @@ import Contacts from './Contacts';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
+
 export class App extends Component {
   constructor(props) {
     super(props);
@@ -63,7 +69,7 @@ export class App extends Component {
             {INDUSTRY_OPTIONS[account.industry]}
           </div>
           <div className="col-3 col-md-2" onClick={openModal}>
-            {account.annualRevenue}
+            {currencyFormatter.format(account.annualRevenue)}
           </div>
           <div className="col-2 col-md-1" onClick={openModal}>
             {RATING_OPTIONS[account.rating]}
