@@ -15,6 +15,7 @@
   top: 1rem;
   left: -1rem;
   border-width: 3px;
+  border-top-color: rgba(0, 0, 0, 0.4);
 }
 
 .contacts .contacts-guide-vertical {
