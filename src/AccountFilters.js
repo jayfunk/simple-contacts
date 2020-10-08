@@ -4,6 +4,8 @@ import {Form, Col, Row, Jumbotron, InputGroup} from 'react-bootstrap';
 
 import {RATING_OPTIONS, INDUSTRY_OPTIONS, STATE_OPTIONS} from './constants';
 
+import './accountFilters.css';
+
 class AccountFilters extends Component {
   constructor(props) {
     super(props);
@@ -130,64 +132,64 @@ class AccountFilters extends Component {
               </Form.Control>
             </Form.Group>
           </Form.Row>
-          <Form.Group as={Row} controlId="annualRevenue">
-            <Form.Label column sm={2}>
-              Annual Revenue
-            </Form.Label>
-            <Col>
-              <InputGroup size="sm" className="mb-3">
-                <InputGroup.Prepend>
-                  <InputGroup.Text id="basic-addon1">Less Than</InputGroup.Text>
-                </InputGroup.Prepend>
-                <Form.Control
-                  name="lessAnnualRevenue"
-                  type="number"
-                  value={this.state.annualRevenue.lessAnnualRevenue}
-                  onChange={this.handleRevenueChange}
-                />
-              </InputGroup>
-              <InputGroup size="sm" className="mb-3">
-                <InputGroup.Prepend>
-                  <InputGroup.Text id="basic-addon1">Greater Than</InputGroup.Text>
-                </InputGroup.Prepend>
-                <Form.Control
-                  name="greaterAnnualRevenue"
-                  type="number"
-                  value={this.state.annualRevenue.greaterAnnualRevenue}
-                  onChange={this.handleRevenueChange}
-                />
-              </InputGroup>
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} controlId="industry">
-            <Form.Label column sm={2}>
-              Industry
-            </Form.Label>
-            <Col>
-              <InputGroup size="sm" className="mb-3">
-                <InputGroup.Prepend>
-                  <InputGroup.Text id="basic-addon1">After</InputGroup.Text>
-                </InputGroup.Prepend>
-                <Form.Control
-                  name="afterEstablishedDate"
-                  type="date"
-                  value={this.state.establishedDate.afterEstablishedDate}
-                  onChange={this.handleEstablishedDateChange}
-                />
-              </InputGroup>
-              <InputGroup size="sm" className="mb-3">
-                <InputGroup.Prepend>
-                  <InputGroup.Text id="basic-addon1">Before</InputGroup.Text>
-                </InputGroup.Prepend>
-                <Form.Control
-                  name="beforeEstablishedDate"
-                  type="date"
-                  value={this.state.establishedDate.beforeEstablishedDate}
-                  onChange={this.handleEstablishedDateChange}
-                />
-              </InputGroup>
-            </Col>
-          </Form.Group>
+          <Form.Row>
+            <Form.Group as={Col} controlId="annualRevenue">
+              <Form.Label>Annual Revenue Range</Form.Label>
+              <Form.Control
+                name="lessAnnualRevenue"
+                type="number"
+                value={this.state.annualRevenue.lessAnnualRevenue}
+                onChange={this.handleRevenueChange}
+              />
+            </Form.Group>
+            <div className="col-md-2 form-separator">
+              <span>Between</span>
+            </div>
+            <Form.Group as={Col} controlId="annualRevenue">
+              <Form.Label
+                style={{
+                  visibility: 'hidden'
+                }}
+              >
+                Annual Revenue
+              </Form.Label>
+              <Form.Control
+                name="greaterAnnualRevenue"
+                type="number"
+                value={this.state.annualRevenue.greaterAnnualRevenue}
+                onChange={this.handleRevenueChange}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} controlId="annualRevenue">
+              <Form.Label>Established Date Range</Form.Label>
+              <Form.Control
+                name="afterEstablishedDate"
+                type="date"
+                value={this.state.establishedDate.afterEstablishedDate}
+                onChange={this.handleEstablishedDateChange}
+              />
+            </Form.Group>
+            <div className="col-md-2 form-separator">
+              <span>Between</span>
+            </div>
+            <Form.Group as={Col} controlId="annualRevenue">
+              <Form.Label
+                style={{
+                  visibility: 'hidden'
+                }}
+              >
+                Established Date Range
+              </Form.Label>
+              <Form.Control
+                name="beforeEstablishedDate"
+                type="date"
+                value={this.state.establishedDate.beforeEstablishedDate}
+                onChange={this.handleEstablishedDateChange}
+              />
+            </Form.Group>
+          </Form.Row>
         </Form>
       </Jumbotron>
     );
