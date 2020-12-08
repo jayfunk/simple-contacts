@@ -1,4 +1,46 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Requirements
+
+### Simple contact application
+
+#### Data model
+
+One contact belongs to an account, and one account can have many contacts. Each account has the following fields:
+- Account name
+- Physical address (or billing address)
+- Industry (Agriculture, Apparel, Banking, Biotechnology, Chemicals, Communications, Consulting,
+Education, Electronics, Energy, Entertainment, Environmental, Finance, Food & Beverage, Government, Healthcare, Insurance, Manufacturing, Media, Recreation, Retail, Shipping, Technology, Telecommunications, Transportation, Utilities, and Other)
+- Annual revenue
+- Rating (Hot, Warm, or Cold)
+- Established date
+
+Each contact has the following fields:
+- Name
+- Phone
+- Email
+- Lead source (Web, Phone, Partner Referral, Purchased List, and Other)
+
+#### Initial UI
+
+There is a table view of all the accounts. Each row in this table is an account record, which can be expanded to display all the contacts who belong to this account. It is possible that an account does not have any contacts yet.
+Features
+Note: There is no more UI suggestion on how to manage accounts and their contacts. It is completely up to you.
+Users should be able to
+- create a new account
+- update and delete existing accounts
+- add new contacts to an existing account
+- update and delete contacts from an existing account
+Users should be able to filter the account table by
+- Account name (substring match)
+- Physical address (in certain state)
+- Industry (exact match)
+- Annual revenue (range match with minimum and maximum revenue)
+- Rating (exact match)
+- Established date (date range match)
+Multiple filters can be combined as &&
+Make the UI responsive.
+Please implement a professional user interface that will be used by real customers. Please follow the UI design principles and pay attention to details.
+Implementation
+Please develop the front-end using either ReactJS or Vanilla JS. You can choose any technology and programming language for the backend development.
 
 ## Available Scripts
 
@@ -27,42 +69,3 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
