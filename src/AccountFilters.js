@@ -14,9 +14,9 @@ class AccountFilters extends Component {
 
     this.state = {
       name: '',
-      industry: '',
-      rating: '',
       state: '',
+      rating: '',
+      industry: '',
       annualRevenue: {
         greaterAnnualRevenue: '',
         lessAnnualRevenue: ''
@@ -205,7 +205,6 @@ class AccountFilters extends Component {
 }
 
 AccountFilters.propTypes = {
-  accounts: PropTypes.array.isRequired,
   onFilterChange: PropTypes.func.isRequired
 };
 
