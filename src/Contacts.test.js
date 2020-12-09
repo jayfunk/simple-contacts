@@ -1,9 +1,54 @@
 import React from 'react';
 import {nanoid} from '@reduxjs/toolkit';
 import {shallow} from 'enzyme';
+import {Button} from 'react-bootstrap';
 
 import * as constants from './constants';
 import {Contacts} from './Contacts';
+
+it('should render an add contact button when there are not any contacts', () => {
+  const wrapper = shallow(
+    <Contacts
+      accountId={'account-id'}
+      contacts={[]}
+      history={{}}
+      match={{
+        url: '',
+        path: ''
+      }}
+      addContact={() => {}}
+      updateContact={() => {}}
+      removeContact={() => {}}
+    />
+  );
+
+  expect(wrapper.find(Button).text()).toEqual('Add Contact');
+});
+
+it('should navigate to the new contacts route when the add contact button is clicked', () => {
+  const mockHistory = {
+    push: jest.fn()
+  };
+
+  const wrapper = shallow(
+    <Contacts
+      accountId={'account-id'}
+      contacts={[]}
+      history={mockHistory}
+      match={{
+        url: '',
+        path: ''
+      }}
+      addContact={() => {}}
+      updateContact={() => {}}
+      removeContact={() => {}}
+    />
+  );
+
+  wrapper.find(Button).simulate('click');
+
+  expect(mockHistory.push).toHaveBeenCalledWith('/accounts/account-id/contacts/new');
+});
 
 it('should render a contact', () => {
   const wrapper = shallow(
