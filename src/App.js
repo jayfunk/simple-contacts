@@ -30,7 +30,7 @@ export class App extends Component {
 
   toggleExpanded(accountId) {
     this.setState({
-      [accountId]: this.state[accountId] === null ? true : !this.state[accountId]
+      [accountId]: this.state[accountId] === undefined ? true : !this.state[accountId]
     });
   }
 
@@ -177,6 +177,11 @@ export class App extends Component {
               }
 
               const account = this.props.accounts.find((account) => account.id === accountId);
+
+              if (!account) {
+                return <Redirect to="/" />;
+              }
+
               const contact = account.contacts.find((contact) => contact.id === contactId);
 
               if (!contact) {
